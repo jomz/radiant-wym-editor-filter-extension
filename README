@@ -1,0 +1,41 @@
+== Wym Editor Filter
+
+Created by: Benny Degezelle - gorilla-webdesign.be
+Version: 0.2
+Contact: benny AT gorilla-webdesign DOT be
+
+This filter adds a WYSIWYM editor to Radiant.
+
+== About WYMeditor
+
+WYMeditor's main concept is to leave details of the document's visual layout, and to concentrate on its structure and meaning, while trying to give the user as much comfort as possible (at least as WYSIWYG editors).
+
+WYMeditor has been created to generate perfectly structured XHTML strict code, to conform to the W3C XHTML specifications and to facilitate further processing by modern applications.
+
+Find out more about WYM editor at http://www.wymeditor.org/en/
+
+== Installation
+
+If you don't have the shards extension installed yet, do so first;
+http://groups.google.com/group/radiantcms-dev/browse_frm/thread/d07f7fffd84b3ce0/5efa6fd6c2e1668e?lnk=gst&q=shards#5efa6fd6c2e1668e
+
+From within your Radiant's instance folder, export this filter into vendor/extensions:
+
+	cd path/to/instance/vendor/extensions
+	svn export svn://zuurstof.openminds.be/home/kaizer/svn/rails_stuff/radiant_extensions/wym_editor_filter
+	
+Now run this rake command to copy all needed files into the public folder:
+
+	rake radiant:extensions:wym_editor_filter:install
+
+That's it! You should now have "Wym Editor" in the filters dropdown on the page edit screen. Selecting this will spawn a WYMeditor instance.
+
+== Known issues
+
+* At least on firefox, you get a JS error for every keystroke. This doesn't break anything though. This will be fixed when i figure out why the filter doesn't work with jQuery 1.4.
+
+
+== Changelog
+
+0.3: Radius tags are now handled properly. They are replaced with an image that holds the respective tag in it's alt attribute.
+0.2: now uses shards to alter the admin interface, so it doesn't interfere with other extensions
