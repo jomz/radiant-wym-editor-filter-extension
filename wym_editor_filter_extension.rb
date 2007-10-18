@@ -1,5 +1,5 @@
 class WymEditorFilterExtension < Radiant::Extension
-  version "0.2"
+  version "0.3"
   description "Provides WYSIWYM (What You See Is What You Mean) rich text editing capabilities. Read all about WYMeditor at http://www.wymeditor.org/en/"
   url "http://gorilla-webdesign.be/"
   
@@ -7,7 +7,6 @@ class WymEditorFilterExtension < Radiant::Extension
     WymEditorFilter
     admin.page.edit.add :main, 'wym_includes', :before => 'edit_header'
     admin.page.edit.add :part_controls, 'wym_part'
-    admin.page.index.add :sitemap_head, 'th_test'
   end
   
   def deactivate
