@@ -1,7 +1,7 @@
 == Wym Editor Filter
 
 Created by: Benny Degezelle - gorilla-webdesign.be
-Version: 0.2
+Version: 0.3
 Contact: benny AT gorilla-webdesign DOT be
 
 This filter adds a WYSIWYM editor to Radiant.
@@ -14,10 +14,11 @@ WYMeditor has been created to generate perfectly structured XHTML strict code, t
 
 Find out more about WYM editor at http://www.wymeditor.org/en/
 
-== Installation
+== Requirements
 
-If you don't have the shards extension installed yet, do so first;
-http://groups.google.com/group/radiantcms-dev/browse_frm/thread/d07f7fffd84b3ce0/5efa6fd6c2e1668e?lnk=gst&q=shards#5efa6fd6c2e1668e
+You need the shards extension for this to work. See http://groups.google.com/group/radiantcms-dev/browse_frm/thread/d07f7fffd84b3ce0/5efa6fd6c2e1668e?lnk=gst&q=shards#5efa6fd6c2e1668e
+
+== Installation
 
 From within your Radiant's instance folder, export this filter into vendor/extensions:
 
