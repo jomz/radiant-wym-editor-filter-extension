@@ -33,9 +33,9 @@ function text_input_method(index, filter) {
 		var elem = $j('.textarea');
 		
 		if (filter == "WymEditor") {
-			boot_wym(elem);
+			boot_wym(elem[0]);
 		} else {
-			unboot_wym(elem);
+			unboot_wym(elem[0]);
 		}
 	}
 }
