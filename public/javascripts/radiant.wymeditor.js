@@ -24,7 +24,6 @@ function text_input_method(index, filter) {
 		
 		if (filter == "WymEditor") {
 			boot_wym(elem);
-      //$j(elem).hide();
 		} else {	
 			unboot_wym(elem)
 		}
@@ -35,9 +34,8 @@ function text_input_method(index, filter) {
 		
 		if (filter == "WymEditor") {
 			boot_wym(elem);
-		} else {	
-			$j(elem).parent().find(".wym_box").remove();
-      $j(elem).show();
+		} else {
+			unboot_wym(elem);
 		}
 	}
 }
