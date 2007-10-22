@@ -49,8 +49,7 @@ function init_load_wym_editor(){
 		$($$(".button")[i]).addClassName('wymupdate');
 		Event.observe($$(".button")[i], 'click', unboot_all_wym)
 	}
-	// I'll use these to first 'unboot' wym, so radius tags are back to normal,
-	// and second, to run wym.update before saving the page/snipper
+	// I'll use these to first 'unboot' wym, so radius tags are back to normal, and wymupdate is ran
 	
 	function unboot_all_wym() {
 		ta = $$('.textarea');
