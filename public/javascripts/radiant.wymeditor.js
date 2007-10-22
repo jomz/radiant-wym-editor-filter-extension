@@ -47,15 +47,6 @@ function init_load_wym_editor(){
 		$($$(".button")[i]).addClassName('wymupdate');
 		Event.observe($$(".button")[i], 'click', unboot_all_wym)
 	}
-	// I'll use these to first 'unboot' wym, so radius tags are back to normal, and wymupdate is ran
-	
-	function unboot_all_wym() {
-		ta = $$('.textarea');
-		for(var i = 0; i < ta.length; i++){
-			unboot_wym(ta[i]);
-		}
-		return true;
-	}
 
   // check to see if we are working with a page or with a snippet
   if ($('part[0][filter_id]'))
@@ -79,8 +70,8 @@ function init_load_wym_editor(){
 }
 
 function boot_wym(elem){
-	$j(function() {
-   $j(elem).wymeditor({
+		$j(function() {
+      $j(elem).wymeditor({
 				xhtmlParser: 'xhtml_parser.js',
 			  cssParser:   'wym_css_parser.js',
 
@@ -123,14 +114,14 @@ function boot_wym(elem){
 					}
 				}
 				wym._html = content;
-			}
-   });
-});
+				}
+      });
+  	});
 }
 
 function unboot_wym(elem){
 	// wym.update() for all!
-	for(var i=0;i<WYM_INSTANCES.length;i++) { WYM_INSTANCES[i].update(); };
+	for(var i=0;i<WYM_INSTANCES.length;i++) { WYM_INSTANCES[i].update(); }
 	// hide wym
 	$j(elem).parent().find(".wym_box").remove();
 	// revert images to radius tags
@@ -146,4 +137,12 @@ function unboot_wym(elem){
 	elem.value = content
 	// show textarea again
   $j(elem).show();
+}
+
+function unboot_all_wym() {
+	ta = $$('.textarea');
+	for(var i = 0; i < ta.length; i++){
+		unboot_wym(ta[i]);
+	}
+	return true;
 }
