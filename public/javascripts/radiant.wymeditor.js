@@ -86,7 +86,6 @@ function boot_wym(elem){
    $j(elem).wymeditor({
 				xhtmlParser: 'xhtml_parser.js',
 			  cssParser:   'wym_css_parser.js',
-				lang: 			 'nl',
 
  			 //classes panel
 	      classesItems: [
