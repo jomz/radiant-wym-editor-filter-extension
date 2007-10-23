@@ -19,22 +19,20 @@ XhtmlLexer.prototype.addTokens = function()
 function text_input_method(index, filter) {
 	if (index != null) {
 		// control for page parts
-		
 		var elem = $('part['+(index - 1)+'][content]');
-		
 		if (filter == "WymEditor") {
 			boot_wym(elem);
-		} else {	
+		} else {
+			for(var i=0;i<WYM_INSTANCES.length;i++) { WYM_INSTANCES[i].update(); };
 			unboot_wym(elem)
 		}
 	} else {
 		// control for snippets
-		
-		var elem = $j('.textarea');
-		
+		var elem = $$('.textarea');
 		if (filter == "WymEditor") {
 			boot_wym(elem[0]);
 		} else {
+			for(var i=0;i<WYM_INSTANCES.length;i++) { WYM_INSTANCES[i].update(); };
 			unboot_wym(elem[0]);
 		}
 	}
@@ -42,9 +40,10 @@ function text_input_method(index, filter) {
 
 // loads WYMeditor for page parts where "WymEditor" is the selected text filter
 function init_load_wym_editor(){
-	// add "wef_hook" class to the save buttons:
+	// add "wymupdate" class to the save buttons:
 	for (var i = 0; i < $$(".button").length; i++){
-		$($$(".button")[i]).addClassName('wymupdate');
+		//$($$(".button")[i]).addClassName('wymupdate');
+		// on save, run wymupdate and unboot on all instances;
 		Event.observe($$(".button")[i], 'click', unboot_all_wym)
 	}
 
@@ -60,20 +59,23 @@ function init_load_wym_editor(){
       }
     }
 		// boot wym on marked textarea's
-		$$(".wymified").length > 0 ? boot_wym($$(".wymified")) : '';
+		ta = $$(".wymified");
+		for (var i = 0; i < ta.length; i++){
+			boot_wym(ta[i]);
+		}
 		
   } else if ($('snippet[filter_id]')) {
     if ($F('snippet[filter_id]') == 'WymEditor') {
-			boot_wym($j('.textarea'));
+			boot_wym($j('.textarea')[0]);
     }
   }
 }
 
 function boot_wym(elem){
-		$j(function() {
-      $j(elem).wymeditor({
+   jQuery(elem).wymeditor({
 				xhtmlParser: 'xhtml_parser.js',
 			  cssParser:   'wym_css_parser.js',
+				lang: 'nl',
 
  			 //classes panel
 	      classesItems: [
@@ -114,33 +116,32 @@ function boot_wym(elem){
 					}
 				}
 				wym._html = content;
-				}
-      });
-  	});
+			}
+   });
 }
 
 function unboot_wym(elem){
-	// wym.update() for all!
-	for(var i=0;i<WYM_INSTANCES.length;i++) { WYM_INSTANCES[i].update(); }
 	// hide wym
-	$j(elem).parent().find(".wym_box").remove();
+	jQuery(elem).parent().find(".wym_box").remove();
 	// revert images to radius tags
 	var content = elem.value;
 	var regex = new RegExp('<img class="radius_tag" alt="(.*?)" src="[^"]*?/images/admin/ruby.png" />', 'gi');
 	var m = content.match(regex);
 	   if (!(m == null)) {
-	       for (i=0; i<m.length; i++) {
+	       for (var i=0; i<m.length; i++) {
 	           var match = unescape(m[i].replace(regex, '<$1>'));
 	           var content = content.replace(m[i], match);
 	       }
 	   }
 	elem.value = content
 	// show textarea again
-  $j(elem).show();
+  jQuery(elem).show();
 }
 
 function unboot_all_wym() {
-	ta = $$('.textarea');
+	// wym.update() for all!
+	for(var i=0;i<WYM_INSTANCES.length;i++) { WYM_INSTANCES[i].update(); };
+	var ta = $$('.textarea');
 	for(var i = 0; i < ta.length; i++){
 		unboot_wym(ta[i]);
 	}
