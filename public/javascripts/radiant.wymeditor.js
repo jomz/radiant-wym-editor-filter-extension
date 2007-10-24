@@ -72,10 +72,9 @@ function init_load_wym_editor(){
 }
 
 function boot_wym(elem){
-   jQuery(elem).wymeditor({
+   $j(elem).wymeditor({
 				xhtmlParser: 'xhtml_parser.js',
 			  cssParser:   'wym_css_parser.js',
-				lang: 'nl',
 
  			 //classes panel
 	      classesItems: [
@@ -122,7 +121,7 @@ function boot_wym(elem){
 
 function unboot_wym(elem){
 	// hide wym
-	jQuery(elem).parent().find(".wym_box").remove();
+	$j(elem).parent().find(".wym_box").remove();
 	// revert images to radius tags
 	var content = elem.value;
 	var regex = new RegExp('<img class="radius_tag" alt="(.*?)" src="[^"]*?/images/admin/ruby.png" />', 'gi');
@@ -135,7 +134,7 @@ function unboot_wym(elem){
 	   }
 	elem.value = content
 	// show textarea again
-  jQuery(elem).show();
+  $j(elem).show();
 }
 
 function unboot_all_wym() {
