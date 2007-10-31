@@ -6,6 +6,7 @@ Contact: benny AT gorilla-webdesign DOT be
 
 This filter adds a WYSIWYM editor to Radiant.
 
+
 == About WYMeditor
 
 WYMeditor's main concept is to leave details of the document's visual layout, and to concentrate on its structure and meaning, while trying to give the user as much comfort as possible (at least as WYSIWYG editors).
@@ -14,9 +15,11 @@ WYMeditor has been created to generate perfectly structured XHTML strict code, t
 
 Find out more about WYM editor at http://www.wymeditor.org/en/
 
+
 == Requirements
 
 You need the shards extension for this to work. See http://groups.google.com/group/radiantcms-dev/browse_frm/thread/d07f7fffd84b3ce0/5efa6fd6c2e1668e?lnk=gst&q=shards#5efa6fd6c2e1668e
+
 
 == Installation
 
@@ -30,9 +33,6 @@ Now run this rake command to copy all needed files into the public folder:
 	rake radiant:extensions:wym_editor_filter:install
 
 That's it! You should now have "Wym Editor" in the filters dropdown on the page edit screen. Selecting this will spawn a WYMeditor instance.
-
-== Known issues
-
 
 
 == Changelog
