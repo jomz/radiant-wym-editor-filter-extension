@@ -86,10 +86,10 @@ function boot_wym(elem){
 	      editorStyles: [
 	        {'name': '.float-left',
 	         'css': 'color: #999; border: 2px solid #ccc;'},
-	         {'name': '.float-right',
+	        {'name': '.float-right',
 	          'css': 'color: #999; border: 2px solid #ccc;'},
 					{'name': '.radius_tag',
-						'css': 'height:1.8em;'}
+						'css': 'height:31px; background:url(/images/admin/wef_radiustag_bg.gif) no-repeat 0 0;'}
 	      ],
 
       //function called when WYMeditor instance is ready
