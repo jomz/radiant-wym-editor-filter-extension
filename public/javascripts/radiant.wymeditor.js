@@ -86,10 +86,13 @@ function boot_wym(elem){
 	      editorStyles: [
 	        {'name': '.float-left',
 	         'css': 'color: #999; border: 2px solid #ccc;'},
-	        {'name': '.float-right',
+	         {'name': '.float-right',
 	          'css': 'color: #999; border: 2px solid #ccc;'},
 					{'name': '.radius_tag',
-						'css': 'height:31px; background:url(/images/admin/wef_radiustag_bg.gif) no-repeat 0 0;'}
+						'css': 'height:31px; background:url(/images/admin/wef_radiustag_bg.gif) no-repeat 0 0;'},
+						// Make div element stand out visually, add label
+  				{'name': 'div',
+  					'css': 'background:#fafceb url(/images/admin/lbl-div.png) no-repeat 2px 2px; margin:10px; padding:10px;'}
 	      ],
 
       //function called when WYMeditor instance is ready
@@ -111,7 +114,7 @@ function boot_wym(elem){
 						title = title.substring(1,title.length-1);
 				    var match = escape(m[i].substring(1,m[i].length - 1));
 				    var regex = new RegExp('(' + m[i] + ')', 'i');
-				    var content = content.replace(regex, '<img class="radius_tag" alt="' + title + '"  src="/images/admin/ruby.png" />');
+				    var content = content.replace(regex, '<hr class="radius_tag" title="' + title + '" />');
 					}
 				}
 				wym._html = content;
@@ -124,7 +127,7 @@ function unboot_wym(elem){
 	$j(elem).parent().find(".wym_box").remove();
 	// revert images to radius tags
 	var content = elem.value;
-	var regex = new RegExp('<img class="radius_tag" alt="(.*?)" src="[^"]*?/images/admin/ruby.png" />', 'gi');
+	var regex = new RegExp('<hr class="radius_tag" title="(.*?)" />', 'gi');
 	var m = content.match(regex);
 	   if (!(m == null)) {
 	       for (var i=0; i<m.length; i++) {
