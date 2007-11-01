@@ -1,7 +1,7 @@
 == Wym Editor Filter
 
 Created by: Benny Degezelle - gorilla-webdesign.be
-Version: 0.3
+Version: 0.3.1
 Contact: benny AT gorilla-webdesign DOT be
 
 This filter adds a WYSIWYM editor to Radiant.
@@ -37,6 +37,7 @@ That's it! You should now have "Wym Editor" in the filters dropdown on the page 
 
 == Changelog
 
+0.3.1: Fixed includes for opera & safari, now works fine on those browsers too
 0.3: Radius tags are now handled properly. They are replaced with an image that holds the respective tag in it's alt attribute.
 0.2: now uses shards to alter the admin interface, so it doesn't interfere with other extensions
 
@@ -44,3 +45,4 @@ That's it! You should now have "Wym Editor" in the filters dropdown on the page 
 
 Bermi Ferrer http://www.bermi.org/
 Jean-François Hovinne http://www.hovinne.com/
+Bjørn Arild Mæland
