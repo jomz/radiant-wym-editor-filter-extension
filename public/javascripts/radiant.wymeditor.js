@@ -19,7 +19,7 @@ XhtmlLexer.prototype.addTokens = function()
 function text_input_method(index, filter) {
 	if (index != null) {
 		// control for page parts
-		var elem = $('part['+(index - 1)+'][content]');
+		var elem = $('part['+(index)+'][content]');
 		if (filter == "WymEditor") {
 			boot_wym(elem);
 		} else {
