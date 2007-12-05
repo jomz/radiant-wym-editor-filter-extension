@@ -14,7 +14,14 @@ namespace :radiant do
 
       desc "Copy needed files to public dir"
       task :install => :environment do
-        `rsync -a --exclude '.svn' #{WymEditorFilterExtension.root + "/public/"} #{RAILS_ROOT + "/public/"}`
+        is_svn_or_dir = proc {|path| path =~ /\.svn/ || File.directory?(path) }
+        Dir[WymEditorFilterExtension.root + "/public/**/*"].reject(&is_svn_or_dir).each do |file|
+          path = file.sub(WymEditorFilterExtension.root, '')
+          directory = File.dirname(path)
+          puts "Copying #{path}..."
+          mkdir_p RAILS_ROOT + directory
+          cp file, RAILS_ROOT + path
+        end
       end
 
     end
