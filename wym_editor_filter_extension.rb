@@ -1,7 +1,7 @@
 class WymEditorFilterExtension < Radiant::Extension
-  version "0.3"
+  version "0.3.2"
   description "Provides WYSIWYM (What You See Is What You Mean) rich text editing capabilities. Read all about WYMeditor at http://www.wymeditor.org/en/"
-  url "http://gorilla-webdesign.be/"
+  url "http://gorilla-webdesign.be/artikel/48-WYM+on+Radiant"
   
   def activate
     raise "The Shards extension is required and must be loaded first!" unless defined?(Shards)
