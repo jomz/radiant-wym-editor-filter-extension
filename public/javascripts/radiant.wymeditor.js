@@ -64,8 +64,8 @@ function init_load_wym_editor(){
 			boot_wym(ta[i]);
 		}
 		
-  } else if ($('snippet_filter_id')) {
-    if ($F('snippet_filter_id') == 'WymEditor') {
+  } else if ($('snippet_filter')) {
+    if ($F('snippet_filter') == 'WymEditor') {
 			boot_wym($j('.textarea')[0]);
     }
   }

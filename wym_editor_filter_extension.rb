@@ -8,6 +8,8 @@ class WymEditorFilterExtension < Radiant::Extension
     WymEditorFilter
     admin.page.edit.add :main, 'wym_includes', :before => 'edit_header'
     admin.page.edit.add :part_controls, 'wym_part'
+    admin.snippet.edit.add :main, 'wym_includes', :before => 'edit_header'  
+    admin.snippet.edit.add :main, 'wym_part', :after => 'edit_form'
   end
   
   def deactivate
