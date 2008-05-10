@@ -19,7 +19,7 @@ XhtmlLexer.prototype.addTokens = function()
 function text_input_method(index, filter) {
 	if (index != null) {
 		// control for page parts
-		var elem = $('part['+(index)+'][content]');
+		var elem = $('part_'+(index)+'_content');
 		if (filter == "WymEditor") {
 			boot_wym(elem);
 		} else {
@@ -48,14 +48,14 @@ function init_load_wym_editor(){
 	}
 
   // check to see if we are working with a page or with a snippet
-  if ($('part[0][filter_id]'))
+  if ($('part_0_filter_id'))
   {
     var parts = $j('.textarea');
     for (var i = 0; i < parts.length; i++)
     {
-      if ($F('part[' + i + '][filter_id]') == 'WymEditor') {
+      if ($F('part_' + i + '_filter_id') == 'WymEditor') {
 				// mark textarea's that need to be wymified
-				$('part['+i+'][content]').addClassName('wymified');
+				$('part_'+i+'_content').addClassName('wymified');
       }
     }
 		// boot wym on marked textarea's
@@ -64,8 +64,8 @@ function init_load_wym_editor(){
 			boot_wym(ta[i]);
 		}
 		
-  } else if ($('snippet[filter_id]')) {
-    if ($F('snippet[filter_id]') == 'WymEditor') {
+  } else if ($('snippet_filter_id')) {
+    if ($F('snippet_filter_id') == 'WymEditor') {
 			boot_wym($j('.textarea')[0]);
     }
   }
