@@ -4,7 +4,7 @@ class WymEditorFilterExtension < Radiant::Extension
   url "http://gorilla-webdesign.be/artikel/48-WYM+on+Radiant"
   
   def activate
-    raise "The Shards extension is required and must be loaded first!" unless defined?(Shards)
+    raise "The Shards extension is required and must be loaded first!" unless defined?(admin.page)
     WymEditorFilter
     admin.page.edit.add :main, 'wym_includes', :before => 'edit_header'
     admin.page.edit.add :part_controls, 'wym_part'
