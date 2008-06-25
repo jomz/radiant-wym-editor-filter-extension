@@ -1,0 +1,7 @@
+--- 
+public/wymeditor: 
+  local_branch: braid/svn/public/wymeditor
+  type: svn
+  revision: 
+  squash: true
+  remote: svn://svn.wymeditor.org/wymeditor/trunk/src
