@@ -5,16 +5,16 @@ var $j = jQuery.noConflict();
 Event.observe(window, 'load', init_load_wym_editor, false);
 
 // These tokens are for Radiant CMS radius tags  
-XhtmlLexer.prototype.addTokens = function()
-{
-  this.addEntryPattern("</?r:", 'Text', 'Text');
-  this.addExitPattern(">", 'Text'); 
-  
-  this.addCommentTokens('Text');
-  this.addScriptTokens('Text');
-  this.addCssTokens('Text');
-  this.addTagTokens('Text');
-}
+//XhtmlLexer.prototype.addTokens = function()
+//{
+//  this.addEntryPattern("</?r:", 'Text', 'Text');
+//  this.addExitPattern(">", 'Text'); 
+//  
+//  this.addCommentTokens('Text');
+//  this.addScriptTokens('Text');
+//  this.addCssTokens('Text');
+//  this.addTagTokens('Text');
+//}
 
 function text_input_method(index, filter) {
 	if (index != null) {
@@ -23,7 +23,7 @@ function text_input_method(index, filter) {
 		if (filter == "WymEditor") {
 			boot_wym(elem);
 		} else {
-			for(var i=0;i<WYM_INSTANCES.length;i++) { WYM_INSTANCES[i].update(); };
+			for(var i=0;i<WYMeditor.INSTANCES.length;i++) { WYMeditor.INSTANCES[i].update(); };
 			unboot_wym(elem)
 		}
 	} else {
@@ -32,7 +32,7 @@ function text_input_method(index, filter) {
 		if (filter == "WymEditor") {
 			boot_wym(elem[0]);
 		} else {
-			for(var i=0;i<WYM_INSTANCES.length;i++) { WYM_INSTANCES[i].update(); };
+			for(var i=0;i<WYMeditor.INSTANCES.length;i++) { WYMeditor.INSTANCES[i].update(); };
 			unboot_wym(elem[0]);
 		}
 	}
@@ -75,6 +75,7 @@ function boot_wym(elem){
    $j(elem).wymeditor({
 				xhtmlParser: 'xhtml_parser.js',
 			  cssParser:   'wym_css_parser.js',
+				lang: 'nl',
 
  			 //classes panel
 	      classesItems: [
@@ -136,13 +137,20 @@ function unboot_wym(elem){
 	       }
 	   }
 	elem.value = content
+	var regex = new RegExp('src="(\.\/)/page_attachments"', 'g');
+	var m = content.match(regex);
+	if(!(m == null)) {
+		for(var i=0; i<m.length; i++){
+			var match = unescape(m[i].replace(regex));
+		}
+	}
 	// show textarea again
   $j(elem).show();
 }
 
 function unboot_all_wym() {
 	// wym.update() for all!
-	for(var i=0;i<WYM_INSTANCES.length;i++) { WYM_INSTANCES[i].update(); };
+	for(var i=0;i<WYMeditor.INSTANCES.length;i++) { WYMeditor.INSTANCES[i].update(); };
 	var ta = $$('.textarea');
 	for(var i = 0; i < ta.length; i++){
 		unboot_wym(ta[i]);
