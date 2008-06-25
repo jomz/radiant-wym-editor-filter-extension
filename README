@@ -1,7 +1,7 @@
 == Wym Editor Filter
 
 Created by: Benny Degezelle - gorilla-webdesign.be
-Version: 0.3.2
+Version: 0.3.3
 Contact: benny AT gorilla-webdesign DOT be
 
 This filter adds a WYSIWYM editor to Radiant.
@@ -18,17 +18,12 @@ Find out more about WYM editor at http://www.wymeditor.org/en/
 
 == Requirements
 
-You need the shards extension for this to work. See http://groups.google.com/group/radiantcms-dev/browse_frm/thread/d07f7fffd84b3ce0/5efa6fd6c2e1668e?lnk=gst&q=shards#5efa6fd6c2e1668e
+If your Radiant is pre-0.6.7, you need the shards extension. See http://groups.google.com/group/radiantcms-dev/browse_frm/thread/d07f7fffd84b3ce0/5efa6fd6c2e1668e?lnk=gst&q=shards#5efa6fd6c2e1668e
 
 
 == Installation
 
-From within your Radiant's instance folder, export this filter into vendor/extensions:
-
-	cd path/to/instance/vendor/extensions
-	svn export svn://zuurstof.openminds.be/home/kaizer/svn/rails_stuff/radiant_extensions/wym_editor_filter
-	
-Now run this rake command to copy all needed files into the public folder:
+Run this rake command to copy all needed files into the public folder:
 
 	rake radiant:extensions:wym_editor_filter:install
 
@@ -37,6 +32,8 @@ That's it! You should now have "Wym Editor" in the filters dropdown on the page 
 
 == Changelog
 
+0.3.3: Removed svn:external to wymeditor, managed through braid now. 
+Updated to wym 0.5a-1, and fixed empty <td> problem.
 0.3.2: Updated to work with radiant 0.6.5. Thanks David Piehler and Tim Blair
 0.3.1: Fixed includes for opera & safari, now works fine on those browsers too
 0.3: Radius tags are now handled properly. They are replaced with an image that holds the respective tag in it's alt attribute.
