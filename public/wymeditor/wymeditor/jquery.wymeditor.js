@@ -3519,7 +3519,13 @@ WYMeditor.XhtmlSaxListener.prototype.joinRepeatedEntities = function(xhtml)
 
 WYMeditor.XhtmlSaxListener.prototype.removeEmptyTags = function(xhtml)
 {
-  return xhtml.replace(new RegExp('<('+this.block_tags.join("|")+')>(<br \/>|&#160;|&nbsp;|\\s)*<\/\\1>' ,'g'),'');
+	// hacked by jomz to allow empty td's;
+	var tags = new Array();
+	for(i=0;i<this.block_tags.length;i++){
+		tags.unshift(this.block_tags[i]);
+	}
+	tags.splice(tags.indexOf('td'),1);
+  return xhtml.replace(new RegExp('<('+tags.join("|")+')>(<br \/>|&#160;|&nbsp;|\\s)*<\/\\1>' ,'g'),'');
 };
 
 WYMeditor.XhtmlSaxListener.prototype.getResult = function()
