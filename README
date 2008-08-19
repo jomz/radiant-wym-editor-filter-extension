@@ -23,7 +23,22 @@ If your Radiant is pre-0.6.7, you need the shards extension. See http://groups.g
 
 == Installation
 
-Run this rake command to copy all needed files into the public folder:
+From within your Radiant's instance folder, export this filter into vendor/extensions:
+
+Using ray:
+
+  rake ray:extension:install name=wym_editor_filter full_name=wymeditor-for-radiant hub=jomz
+
+Using git:
+  
+  git clone git://github.com/jomz/wymeditor-for-radiant.git vendor/extensions/wym_editor_filter
+  
+Using subversion:
+
+  cd path/to/instance/vendor/extensions
+  svn export svn://zuurstof.openminds.be/home/kaizer/svn/rails_stuff/radiant_extensions/wym_editor_filter
+  
+Now run this rake command to copy all needed files into the public folder:
 
 	rake radiant:extensions:wym_editor_filter:install
 
