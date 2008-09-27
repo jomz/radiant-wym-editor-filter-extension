@@ -136,16 +136,16 @@ function unboot_wym(elem){
 	           var content = content.replace(m[i], match);
 	       }
 	   }
-		elem.value = content;
-		var regex = new RegExp('src="([\.\/]+)/page_attachments', 'g');
-		var m = content.match(regex);
-		if(!(m == null)) {
-			for(var i=0; i<m.length; i++){
-				var match = unescape(m[i].replace(regex, 'src="/page_attachments'));
-				var content = content.replace(m[i], match)
-			}
+	elem.value = content;
+	var regex = new RegExp('src="([\.\/]+)/page_attachments', 'g');
+	var m = content.match(regex);
+	if(!(m == null)) {
+		for(var i=0; i<m.length; i++){
+			var match = unescape(m[i].replace(regex, 'src="/page_attachments'));
+			var content = content.replace(m[i], match)
 		}
-		elem.value = content;
+	}
+	elem.value = content;
 	// show textarea again
   $j(elem).show();
 }
