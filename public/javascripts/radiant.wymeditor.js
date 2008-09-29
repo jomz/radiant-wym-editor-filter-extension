@@ -71,39 +71,41 @@ function init_load_wym_editor(){
   }
 }
 
-function boot_wym(elem){
-   $j(elem).wymeditor({
-				xhtmlParser: 'xhtml_parser.js',
-			  cssParser:   'wym_css_parser.js',
+function boot_wym(elem){	
+  $j(elem).wymeditor({
 				lang: 'nl',
 
- 			 //classes panel
+			 //classes panel
 	      classesItems: [
-	        {'name': 'float-left', 'title': 'PARA: left', 'expr': 'p'},
-	        {'name': 'float-right', 'title': 'PARA: right', 'expr': 'p'}
+	        {'name': 'float_left', 'title': 'PARA: left', 'expr': 'p'},
+	        {'name': 'float_right', 'title': 'PARA: right', 'expr': 'p'},
+	        {'name': 'maxwidth', 'title': 'PARA: maxwidth', 'expr': 'p'},
+	        {'name': 'narrow', 'title': 'PARA: narrow', 'expr': 'p'}
 	      ],
 
 	      //editor css values for visual feedback
 	      editorStyles: [
-	        {'name': '.float-left',
+	        {'name': '.float_left',
 	         'css': 'color: #999; border: 2px solid #ccc;'},
-	         {'name': '.float-right',
+	         {'name': '.float_right',
 	          'css': 'color: #999; border: 2px solid #ccc;'},
+	         {'name': '.maxwidth',
+	          'css': 'color: #333; border: 2px solid #ccc;'},
+	         {'name': '.narrow',
+	          'css': 'color: #666; border: 2px solid #CCC;'},
 					{'name': '.radius_tag',
 						'css': 'height:31px; background:url(/images/admin/wef_radiustag_bg.gif) no-repeat 0 0;'},
 						// Make div element stand out visually, add label
-  				{'name': 'div',
-  					'css': 'background:#fafceb url(/images/admin/lbl-div.png) no-repeat 2px 2px; margin:10px; padding:10px;'}
+ 				{'name': 'div',
+ 					'css': 'background:#fafceb url(/images/admin/lbl-div.png) no-repeat 2px 2px; margin:10px; padding:10px;'}
 	      ],
 
-      //function called when WYMeditor instance is ready
-      //wym is the WYMeditor instance
-      postInit: function(wym) {
-        //set the status bar value
-        wym.status('&nbsp;');
-        //activate 'hovertools' plugin, which gives more feedback to the user
-        wym.hovertools();
-      },
+     //function called when WYMeditor instance is ready
+     //wym is the WYMeditor instance
+     postInit: function(wym) {
+       // change the index of this instance into the id string of the parent it has replaced;
+			 wym._index = elem.id;
+     },
 
 			preInit: function(wym) {
 				//change_radius_to_imgs
@@ -120,12 +122,13 @@ function boot_wym(elem){
 				}
 				wym._html = content;
 			}
-   });
+  });
 }
 
 function unboot_wym(elem){
 	// hide wym
 	$j(elem).parent().find(".wym_box").remove();
+	
 	// revert images to radius tags
 	var content = elem.value;
 	var regex = new RegExp('<hr class="radius_tag" title="(.*?)" />', 'gi');
@@ -136,7 +139,8 @@ function unboot_wym(elem){
 	           var content = content.replace(m[i], match);
 	       }
 	   }
-	elem.value = content;
+
+	// fix urls to page attachments
 	var regex = new RegExp('src="([\.\/]+)/page_attachments', 'g');
 	var m = content.match(regex);
 	if(!(m == null)) {
@@ -146,13 +150,21 @@ function unboot_wym(elem){
 		}
 	}
 	elem.value = content;
+	
 	// show textarea again
   $j(elem).show();
 }
 
 function unboot_all_wym() {
 	// wym.update() for all!
-	for(var i=0;i<WYMeditor.INSTANCES.length;i++) { WYMeditor.INSTANCES[i].update(); };
+	for(var i=0;i<WYMeditor.INSTANCES.length;i++) { 
+		// don't update if the filter for this part is no longer set to wym
+		s = WYMeditor.INSTANCE[i]._index // i.e. part_0_content
+		filter_select = $("part_" + s.split('_')[1] + "_filter_id")
+		if(filter_select.value != 'WymEditor'){next;}
+		// if it's still set to Wym, send the html back to the original textarea
+		WYMeditor.INSTANCES[i].update(); 
+		};
 	var ta = $$('.textarea');
 	for(var i = 0; i < ta.length; i++){
 		unboot_wym(ta[i]);
