@@ -156,15 +156,26 @@ function unboot_wym(elem){
 }
 
 function unboot_all_wym() {
-	// wym.update() for all!
-	for(var i=0;i<WYMeditor.INSTANCES.length;i++) { 
-		// don't update if the filter for this part is no longer set to wym
-		s = WYMeditor.INSTANCE[i]._index // i.e. part_0_content
-		filter_select = $("part_" + s.split('_')[1] + "_filter_id")
-		if(filter_select.value != 'WymEditor'){next;}
-		// if it's still set to Wym, send the html back to the original textarea
-		WYMeditor.INSTANCES[i].update(); 
-		};
+	// save button clicked, update and unload all wym instances
+	// check to see if we are working with a page or with a snippet
+  if ($('part_0_filter_id'))
+  {
+		// We're on the page edit screen
+    for(var i=0;i<WYMeditor.INSTANCES.length;i++) { 
+			// don't update if the filter for this part is no longer set to wym
+			s = WYMeditor.INSTANCE[i]._index // i.e. part_0_content
+			filter_select = $("part_" + s.split('_')[1] + "_filter_id")
+			if(filter_select.value != 'WymEditor'){next;}
+			// if it's still set to Wym, send the html back to the original textarea
+			WYMeditor.INSTANCES[i].update();
+			};
+  } else if ($('snippet_filter')) {
+		// We're on the snippet edit screen
+    if ($F('snippet_filter') == 'WymEditor') {
+			WYMeditor.INSTANCES[0].update();
+    }
+  }
+
 	var ta = $$('.textarea');
 	for(var i = 0; i < ta.length; i++){
 		unboot_wym(ta[i]);
