@@ -1,7 +1,7 @@
 == Wym Editor Filter
 
 Created by: Benny Degezelle - gorilla-webdesign.be
-Version: 0.3.3
+Version: 0.3.4
 Contact: benny AT gorilla-webdesign DOT be
 
 This filter adds a WYSIWYM editor to Radiant.
@@ -32,6 +32,7 @@ That's it! You should now have "Wym Editor" in the filters dropdown on the page 
 
 == Changelog
 
+0.3.4: Updated to wym 0.5a-2, fixed bug where on_save, all edits made after switching to a different filter were lost
 0.3.3: Removed svn:external to wymeditor, managed through braid now. 
 Updated to wym 0.5a-1, and fixed empty <td> problem.
 0.3.2: Updated to work with radiant 0.6.5. Thanks David Piehler and Tim Blair
@@ -46,3 +47,8 @@ Jean-François Hovinne http://www.hovinne.com/
 Bjørn Arild Mæland
 David Piehler http://basicsgroup.com/
 Tim Blair http://tim.bla.ir/
+
+== Known issues
+
+Does not work properly with Safari: when you have containers present in the editor, and you click any button that calls a dialog (preview, table, link popups), the entire #content div will be replaced by a regexp string.
+This is not my biscuit to crumble, reported to the WYMeditor trac here: http://trac.wymeditor.org/trac/ticket/124
