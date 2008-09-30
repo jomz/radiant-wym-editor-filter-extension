@@ -1,5 +1,5 @@
 // boot jQuery
-var $j = jQuery.noConflict();
+jQuery.noConflict();
 
 // add load event
 Event.observe(window, 'load', init_load_wym_editor, false);
@@ -50,7 +50,7 @@ function init_load_wym_editor(){
   // check to see if we are working with a page or with a snippet
   if ($('part_0_filter_id'))
   {
-    var parts = $j('.textarea');
+    var parts = jQuery('.textarea');
     for (var i = 0; i < parts.length; i++)
     {
       if ($F('part_' + i + '_filter_id') == 'WymEditor') {
@@ -66,13 +66,13 @@ function init_load_wym_editor(){
 		
   } else if ($('snippet_filter')) {
     if ($F('snippet_filter') == 'WymEditor') {
-			boot_wym($j('.textarea')[0]);
+			boot_wym(jQuery('.textarea')[0]);
     }
   }
 }
 
 function boot_wym(elem){	
-  $j(elem).wymeditor({
+  jQuery(elem).wymeditor({
 				lang: 'nl',
 
 			 //classes panel
@@ -127,7 +127,7 @@ function boot_wym(elem){
 
 function unboot_wym(elem){
 	// hide wym
-	$j(elem).parent().find(".wym_box").remove();
+	jQuery(elem).parent().find(".wym_box").remove();
 	
 	// revert images to radius tags
 	var content = elem.value;
@@ -152,7 +152,7 @@ function unboot_wym(elem){
 	elem.value = content;
 	
 	// show textarea again
-  $j(elem).show();
+  jQuery(elem).show();
 }
 
 function unboot_all_wym() {

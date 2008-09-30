@@ -47,8 +47,3 @@ Jean-François Hovinne http://www.hovinne.com/
 Bjørn Arild Mæland
 David Piehler http://basicsgroup.com/
 Tim Blair http://tim.bla.ir/
-
-== Known issues
-
-Does not work properly with Safari: when you have containers present in the editor, and you click any button that calls a dialog (preview, table, link popups), the entire #content div will be replaced by a regexp string.
-This is not my biscuit to crumble, reported to the WYMeditor trac here: http://trac.wymeditor.org/trac/ticket/124
