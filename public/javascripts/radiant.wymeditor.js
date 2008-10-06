@@ -71,61 +71,93 @@ function init_load_wym_editor(){
 
 function boot_wym(elem){	
   jQuery(elem).wymeditor({
-		lang: 'nl',
+				lang: 'nl',
 
-		//classes panel
-	  classesItems: [
-	  	{'name': 'float_left', 'title': 'PARA: left', 'expr': 'p'},
-	    {'name': 'float_right', 'title': 'PARA: right', 'expr': 'p'},
-	    {'name': 'maxwidth', 'title': 'PARA: maxwidth', 'expr': 'p'},
-	    {'name': 'narrow', 'title': 'PARA: narrow', 'expr': 'p'}
-	  ],
+			 //classes panel
+	      classesItems: [
+	        {'name': 'float_left', 'title': 'PARA: left', 'expr': 'p'},
+	        {'name': 'float_right', 'title': 'PARA: right', 'expr': 'p'},
+	        {'name': 'maxwidth', 'title': 'PARA: maxwidth', 'expr': 'p'},
+	        {'name': 'narrow', 'title': 'PARA: narrow', 'expr': 'p'}
+	      ],
 
-	  //editor css values for visual feedback
-	  editorStyles: [
-	    {'name': '.float_left',
-	     'css': 'color: #999; border: 2px solid #ccc;'},
-	    {'name': '.float_right',
-	     'css': 'color: #999; border: 2px solid #ccc;'},
-	    {'name': '.maxwidth',
-	     'css': 'color: #333; border: 2px solid #ccc;'},
-	    {'name': '.narrow',
-	     'css': 'color: #666; border: 2px solid #CCC;'},
-			{'name': '.radius_tag',
-			 'css': 'height:31px; background:url(/images/admin/wef_radiustag_bg.gif) no-repeat 0 0;'},
-			{'name': 'div',
- 			 'css': 'background:#fafceb url(/images/admin/lbl-div.png) no-repeat 2px 2px; margin:10px; padding:10px;'}
-	  ],
+	      //editor css values for visual feedback
+	      editorStyles: [
+	        {'name': '.float_left',
+	         'css': 'color: #999; border: 2px solid #ccc;'},
+	         {'name': '.float_right',
+	          'css': 'color: #999; border: 2px solid #ccc;'},
+	         {'name': '.maxwidth',
+	          'css': 'color: #333; border: 2px solid #ccc;'},
+	         {'name': '.narrow',
+	          'css': 'color: #666; border: 2px solid #CCC;'},
+					{'name': '.radius_tag',
+						'css': 'height:31px; background:url(/images/admin/wef_radiustag_bg.gif) no-repeat 0 0;'},
+						// Make div element stand out visually, add label
+ 				{'name': 'div',
+ 					'css': 'background:#fafceb url(/images/admin/lbl-div.png) no-repeat 2px 2px; margin:10px; padding:10px;'}
+	      ],
 
-    postInit: function(wym) {
-    // change the index of this instance into the id string of the parent it has replaced;
-		 	wym._index = elem.id;
-    },
+     //function called when WYMeditor instance is ready
+     //wym is the WYMeditor instance
+     postInit: function(wym) {
+       // change the index of this instance into the id string of the parent it has replaced;
+			 wym._index = elem.id;
+			// bind drop function
+			bind_droppability(wym._iframe);
+     },
 
-		preInit: function(wym) {
-		// change_radius_to_imgs
-			var content = (wym._html);
-			var m = content.match(/(<r:([^\/><]*)?\/?>)|(<\/r:([^>]*)?>)/g);
-			if (!(m == null)) {
-				for (var i=0; i < m.length; i++) {
-			  	var title = m[i].replace(/"/g, "'");
-					title = title.substring(1,title.length-1);
-			    var match = escape(m[i].substring(1,m[i].length - 1));
-			    var regex = new RegExp('(' + m[i] + ')', 'i');
-			    var content = content.replace(regex, '<hr class="radius_tag" title="' + title + '" />');
+			preInit: function(wym) {
+				//change_radius_to_imgs
+				var content = (wym._html);
+				var m = content.match(/(<r:([^\/><]*)?\/?>)|(<\/r:([^>]*)?>)/g);
+				if (!(m == null)) {
+					for (var i=0; i < m.length; i++) {
+				  	var title = m[i].replace(/"/g, "'");
+						title = title.substring(1,title.length-1);
+				    var match = escape(m[i].substring(1,m[i].length - 1));
+				    var regex = new RegExp('(' + m[i] + ')', 'i');
+				    var content = content.replace(regex, '<hr class="radius_tag" title="' + title + '" />');
+					}
 				}
+				wym._html = content;
 			}
-			wym._html = content;
-		}
   });
+}
+
+function bind_droppability(box) {
+  Droppables.add(box, {
+    accept: 'asset',
+    onDrop: function(element) {
+      var classes = element.className.split(' ');
+      var tag_type = classes[0];
+			var link = element.select('a.bucket_link')[0];
+			if(tag_type == 'image'){
+				// copy the original image to WYM
+				var tag = '<img src="'+ link.href +'" alt="'+ link.title +'" />';
+			}
+			else{
+				// copy a link to WYM
+				var asset_id = element.id.split('_').last();
+				var tag = '<a href="'+ link.href +'">'+ link.title +'</a>'
+			}
+      var wym_index = "part_" + (box.ancestors()[2].ancestors()[1].id.split('-')[1] - 1)  + "_content";
+			for(var i=0;i<WYMeditor.INSTANCES.length;i++) {
+				if(WYMeditor.INSTANCES[i]._index != wym_index){ next; }
+				wym = WYMeditor.INSTANCES[i];
+			}
+    	wym.insert(tag);
+    }
+  });
+  new Draggable('asset-bucket', { starteffect: 'none' });
 }
 
 function unboot_wym(elem){
 	// hide wym
 	jQuery(elem).parent().find(".wym_box").remove();
 	
-	var content = elem.value;
 	// revert images to radius tags
+	var content = elem.value;
 	var regex = new RegExp('<hr class="radius_tag" title="(.*?)" />', 'gi');
 	var m = content.match(regex);
 	   if (!(m == null)) {
@@ -144,14 +176,24 @@ function unboot_wym(elem){
 			var content = content.replace(m[i], match)
 		}
 	}
-	
+	// fix urls to assets (paperclipped)
+	var regex = new RegExp('src="([\.\/]+)/assets', 'g');
+	var m = content.match(regex);
+	if(!(m == null)) {
+		for(var i=0; i<m.length; i++){
+			var match = unescape(m[i].replace(regex, 'src="/assets'));
+			var content = content.replace(m[i], match)
+		}
+	}
 	elem.value = content;
+	
 	// show textarea again
   jQuery(elem).show();
 }
 
 function unboot_all_wym() {
 	// save button clicked, update all wym instances
+	// check to see if we are working with a page or with a snippet
   if ($('part_0_filter_id'))
   {
 		// We're on the page edit screen
@@ -159,16 +201,17 @@ function unboot_all_wym() {
 			// don't update if the filter for this part is no longer set to wym
 			s = WYMeditor.INSTANCES[i]._index; // i.e. part_0_content
 			filter_select = $("part_" + s.split('_')[1] + "_filter_id");
-			if(filter_select.value == 'WymEditor'){ 
+			if(filter_select.value == 'WymEditor'){
 				WYMeditor.INSTANCES[i].update();
+				unboot_wym($(s));
 				}
 			}
   } else if ($('snippet_filter')) {
 		// We're on the snippet edit screen
     if ($F('snippet_filter') == 'WymEditor') {
 			WYMeditor.INSTANCES[0].update();
+			unboot_wym($$('.textarea')[0]);
     }
   }
-
 	return true;
 }
