@@ -72,21 +72,8 @@ function init_load_wym_editor(){
 function boot_wym(elem){	
   jQuery(elem).wymeditor({
     lang: 'nl',
-    classesItems: [
-      {'name': 'float_left', 'title': 'PARA: left', 'expr': 'p'},
-      {'name': 'float_right', 'title': 'PARA: right', 'expr': 'p'},
-      {'name': 'maxwidth', 'title': 'PARA: maxwidth', 'expr': 'p'},
-      {'name': 'narrow', 'title': 'PARA: narrow', 'expr': 'p'}
-    ],
+    stylesheet: '/stylesheets/admin/wym.css',
     editorStyles: [
-      {'name': '.float_left',
-       'css': 'color: #999; border: 2px solid #ccc;'},
-      {'name': '.float_right',
-       'css': 'color: #999; border: 2px solid #ccc;'},
-      {'name': '.maxwidth',
-       'css': 'color: #333; border: 2px solid #ccc;'},
-      {'name': '.narrow',
-       'css': 'color: #666; border: 2px solid #CCC;'},
       {'name': '.radius_tag',
        'css': 'height:31px; background:url(/images/admin/wef_radiustag_bg.gif) no-repeat 0 0;'},
       {'name': 'div',
