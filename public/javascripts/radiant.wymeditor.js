@@ -69,14 +69,21 @@ function init_load_wym_editor(){
   }
 }
 
+function adjustFramesize(iframe) {
+  iframe.style.height = (iframe.contentWindow.document.body.offsetHeight + 35) + "px";
+  setTimeout(function(){ adjustFramesize(iframe); }, 100);
+}
+
 function boot_wym(elem){	
   jQuery(elem).wymeditor({
-    lang: 'nl',
+    lang: 'en',
+    skin: 'radiant',
+    iframeBasePath: '/wymeditor/wymeditor/iframe/radiant/',
     classesItems: [
-		  {'name': 'float_left', 'title': 'PARA: left', 'expr': 'p'},
-		  {'name': 'float_right', 'title': 'PARA: right', 'expr': 'p'},
-		  {'name': 'maxwidth', 'title': 'PARA: maxwidth', 'expr': 'p'},
-		  {'name': 'narrow', 'title': 'PARA: narrow', 'expr': 'p'}
+		  {'name': 'float_left', 'title': 'Left', 'expr': 'p'},
+		  {'name': 'float_right', 'title': 'Right', 'expr': 'p'},
+		  {'name': 'centered', 'title': 'Centered', 'expr': 'p'},
+		  {'name': 'justified', 'title': 'Justified', 'expr': 'p'}
 		],
     editorStyles: [
 		  {'name': '.float_left',
@@ -96,6 +103,7 @@ function boot_wym(elem){
       // map the index of this instance to it's page_part
       editors[elem.id] = wym._index;
       bind_droppability(wym._iframe);
+      adjustFramesize(wym._iframe);
     },
 
 		preInit: function(wym) {
