@@ -27,11 +27,13 @@ function text_input_method(index, filter) {
 		}
 	} else {
 		// control for snippets
-		var elem = $$('.textarea');
+		var elem = $$('.textarea')[0];
 		if (filter == "WymEditor") {
-			boot_wym(elem[0]);
+			boot_wym(elem);
+		  elem.value = content;
 		} else {
-			unboot_wym(elem[0]);
+			unboot_wym(elem);
+		  elem.value = content;
 		}
 	}
 }
@@ -162,6 +164,7 @@ function unboot_all_wym() {
       if(filter_select.value == 'WymEditor'){
         var index = editors["part_" + i + "_content"];
         WYMeditor.INSTANCES[index].update();
+        unboot_wym($("part_" + i + "_content"));
       } 
     }
   } else if ($('snippet_filter')) { 				// We're on the snippet edit screen
