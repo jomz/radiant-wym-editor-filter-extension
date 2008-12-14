@@ -23,7 +23,7 @@
 /* VISUAL FEEDBACK */
 
 /* basic */
-  body  { background: #F5F1E2;}
+  body  { background: #F5F1E2; font-family: "Lucida Grande","Bitstream Vera Sans",Helvetica,Verdana,Arial,sans-serif; }
  
 /* make HTML blocs visible */
   p,
@@ -42,11 +42,12 @@
   table         { background: #eae3c5 no-repeat 2px 2px;
                   padding:8px 5px 5px;
                   margin:10px; }
-  td            { background: #ffffff; }
+  td            { background: #ffffff; padding: 5px; }
   th            { background: #CDC295; }
   ul,
-      ol        { border-left:20px solid #eae3c5; padding:0px 5px; }
-  caption       { background: #eae3c5; padding: 5px; font-weight: bold; margin-bottom:-10px; }
+      ol        { border-left:30px solid #eae3c5; padding:0px 5px; background: #F5F1E2 no-repeat 2px 2px; }
+  li            { border-bottom: 2px solid #EAE3C5; padding: 5px 5px; background-color: #ffffff; }
+  caption       { background: #eae3c5; padding: 5px 10px; font-weight: bold; margin-bottom:-20px; }
   table         { width: 500px; }
   td            { width: 25%; }
   blockquote    { margin-left: 30px; }

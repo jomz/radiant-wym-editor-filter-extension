@@ -14,6 +14,9 @@
  *
  * File Authors:
  *      Daniel Reszka (d.reszka a-t wymeditor dotorg)
+ *
+ * Radiant Integration:
+ *        Michael Kessler (michi a-t netzpiraten dotch)
 */
 
 /*TRYING TO RESET STYLES THAT MAY INTERFERE WITH WYMEDITOR*/
@@ -122,13 +125,21 @@
         .wym_skin_radiant .wym_dropdown ul            { border: solid gray; border-width: 0 1px 1px 1px; margin-left: -1px; padding: 5px 10px 5px 3px;}
         
 /*DIALOGS*/
+        .wym_dialog fieldset        { background-color:#F5F1E2; padding: 20px; border: 1px solid #CDC295; font-family: "Lucida Grande","Bitstream Vera Sans",Helvetica,Verdana,Arial,sans-serif; font-size: 90%}
+        .wym_dialog legend          { font-weight: bold; font-size: 110% }
+        .wym_dialog label         { font-weight: bold; }
+        .wym_submit                 { font-size: 130% }
         .wym_dialog div.row         { margin-bottom: 5px;}
+        .wym_dialog div.row-rows    { margin-top: 15px;}
+        .wym_dialog div.row-indent  { padding-top: 20px; }
         .wym_dialog div.row input   { margin-right: 5px;}
-        .wym_dialog div.row label   { float: left; width: 150px; display: block; text-align: right; margin-right: 10px; }
-        .wym_dialog div.row-indent  { padding-left: 160px; }
+        .wym_dialog div.row label   { float: left; width: 150px; display: block; margin-right: 10px; }
         /*autoclearing*/        
         .wym_dialog div.row:after            { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
         .wym_dialog div.row                  { display: inline-block; }
+        .wym_caption, .wym_summary,
+        .wym_src, .wym_alt, .wym_title, 
+        .wym_text, .wym_href                 { width: 99.5%; }
             /* Hides from IE-mac \*/
             * html .wym_dialog div.row       { height: 1%; }
             .wym_dialog div.row              { display: block; }
