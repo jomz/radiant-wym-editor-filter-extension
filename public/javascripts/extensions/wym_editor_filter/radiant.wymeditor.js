@@ -313,3 +313,52 @@ function bind_droppability(box) {
   });
   new Draggable('asset-bucket', { starteffect: 'none' });
 }
+
+/*
+* Overwrite command execution of WYMeditor to use
+* the page preview extension if installed
+*/
+WYMeditor.editor.prototype.exec = function(cmd) {
+
+  //base function for execCommand
+  //open a dialog or exec
+  switch(cmd) {
+    case WYMeditor.CREATE_LINK:
+      var container = this.container();
+      if(container || this._selected_image) this.dialog(WYMeditor.DIALOG_LINK);
+    break;
+
+    case WYMeditor.INSERT_IMAGE:
+      this.dialog(WYMeditor.DIALOG_IMAGE);
+    break;
+
+    case WYMeditor.INSERT_TABLE:
+      this.dialog(WYMeditor.DIALOG_TABLE);
+    break;
+
+    case WYMeditor.PASTE:
+      this.dialog(WYMeditor.DIALOG_PASTE);
+    break;
+
+    case WYMeditor.TOGGLE_HTML:
+      this.update();
+      this.toggleHtml();
+
+      //partially fixes #121 when the user manually inserts an image
+      if(!jQuery(this._box).find(this._options.htmlSelector).is(':visible'))
+        this.listen();
+    break;
+
+    case WYMeditor.PREVIEW:
+      if (jQuery('input[name="preview_page"]')) {
+        jQuery('input[name="preview_page"]').click();
+      } else {
+        this.dialog(WYMeditor.PREVIEW);
+      }
+    break;
+
+    default:
+      this._exec(cmd);
+    break;
+  }
+};
