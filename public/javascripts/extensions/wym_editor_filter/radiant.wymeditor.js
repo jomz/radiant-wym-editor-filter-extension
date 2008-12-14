@@ -80,10 +80,10 @@ function boot_wym(elem){
     skin: 'radiant',
     iframeBasePath: '/wymeditor/wymeditor/iframe/radiant/',
     classesItems: [
-		  {'name': 'float_left', 'title': 'Left', 'expr': 'p'},
-		  {'name': 'float_right', 'title': 'Right', 'expr': 'p'},
-		  {'name': 'centered', 'title': 'Centered', 'expr': 'p'},
-		  {'name': 'justified', 'title': 'Justified', 'expr': 'p'}
+          {'name': 'float_left', 'title': 'PARA: left', 'expr': 'p'},
+          {'name': 'float_right', 'title': 'PARA: right', 'expr': 'p'},
+          {'name': 'maxwidth', 'title': 'PARA: maxwidth', 'expr': 'p'},
+          {'name': 'narrow', 'title': 'PARA: narrow', 'expr': 'p'}
 		],
     editorStyles: [
 		  {'name': '.float_left',
