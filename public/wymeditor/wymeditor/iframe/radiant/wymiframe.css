@@ -20,6 +20,8 @@
  *        Michael Kessler (michi a-t netzpiraten dotch)
 */
 
+  html { overflow: hidden; }
+
 /* VISUAL FEEDBACK */
 
 /* basic */
