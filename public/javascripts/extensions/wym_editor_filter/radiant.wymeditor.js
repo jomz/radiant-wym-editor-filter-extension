@@ -80,11 +80,11 @@ function text_input_method(index, filter) {
 		}
 	} else {
 		// control for snippets
-		var elem = $$('.textarea');
+		var elem = $$('.textarea')[0];
 		if (filter == "WymEditor") {
-			boot_wym(elem[0]);
+			boot_wym(elem);
 		} else {
-			unboot_wym(elem[0]);
+			unboot_wym(elem);
 		}
 	}
 }
@@ -371,7 +371,7 @@ function unboot_all_wym() {
     }
   } else if ($('snippet_filter')) {                // We're on the snippet edit screen
     if ($F('snippet_filter') == 'WymEditor') {
-      unboot_wym($$('.textarea'));
+      unboot_wym($$('.textarea')[0]);
     }
   }
   return true;
