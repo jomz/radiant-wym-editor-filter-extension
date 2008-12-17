@@ -340,9 +340,7 @@ function unboot_wym(elem){
   }
 
   // TODO: convert <img src="/assets/x/foo" alt="foo" /> to
-  // <r:assets:image title="foo" />
-
-  // TODO: must keep image resizing from the visual editor
+  // <r:assets:image title="foo" /> (but must keep image resizing from the visual editor)
 
   // update textarea content
   elem.value = content;
