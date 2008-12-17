@@ -297,7 +297,7 @@ function boot_wym(elem) {
 function unboot_wym(elem){
 
   // stop auto resize timer
-  clearIntervall(timers[elem.id]);
+  clearInterval(timers[elem.id]);
 
   // hide wym
   jQuery(elem).parent().find(".wym_box").remove();
