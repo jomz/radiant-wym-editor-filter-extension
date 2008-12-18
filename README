@@ -1,11 +1,11 @@
 == Wym Editor Filter
 
 Created by: Benny Degezelle - gorilla-webdesign.be
-Version: 0.3.4
+Version: 0.3.5
 Contact: benny AT gorilla-webdesign DOT be
 
 This filter adds a WYSIWYM editor to Radiant.
-
+It is aware of and interacts with the paperclipped and preview extension, but these are not required.
 
 == About WYMeditor
 
@@ -38,7 +38,7 @@ That's it! You should now have "Wym Editor" in the filters dropdown on the page 
 - updated editor & dialogs CSS to better fit into Radiant
 - auto-growing the editor when content gets longer than it can show
 - preview button uses radiant-preview-extension if installed
-Big thanks for everything netpirat (Michael Kessler)!!
+Big thanks for all that to netzpirat (Michael Kessler)!!
 
 0.3.4: Updated to wym 0.5a-2, fixed bug where on_save, all edits made after switching to a different filter were lost
 0.3.3: Removed svn:external to wymeditor, managed through braid now. 
