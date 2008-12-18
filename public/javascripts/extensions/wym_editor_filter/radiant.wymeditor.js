@@ -39,14 +39,15 @@ function init_load_wym_editor(){
 	}
 
   // check to see if we are working with a page or with a snippet
-  if ($('part_0_filter_id'))
+  if ($('pages'))
   {
-    var parts = jQuery('.textarea');
+    var parts = $$('.part');
     for (var i = 0; i < parts.length; i++)
     {
-      if ($F('part_' + i + '_filter_id') == 'WymEditor') {
+			var part_name = parts[i].id.split("-")[1]
+      if ($F('part_' + part_name + '_filter_id') == 'WymEditor') {
 				// mark textarea's that need to be wymified
-				$('part_'+i+'_content').addClassName('wymified');
+				$('part_'+part_name+'_content').addClassName('wymified');
       }
     }
 		// boot wym on marked textarea's
@@ -55,7 +56,7 @@ function init_load_wym_editor(){
 			boot_wym(ta[i]);
 		}
 		
-  } else if ($('snippet_filter')) {
+  } else {
     if ($F('snippet_filter') == 'WymEditor') {
 			boot_wym(jQuery('.textarea')[0]);
     }
@@ -385,7 +386,7 @@ function bind_droppability(box) {
   Droppables.add(box, {
 
     accept: 'asset',
-    
+
     /* An element has been dropped into the iframe
      * 
      * @param element - the dropped element
@@ -406,16 +407,13 @@ function bind_droppability(box) {
         var asset_id = element.id.split('_').last();
         var tag = '<a href="'+ link.href +'">'+ link.title +'</a>'
       }
-
-      var wym_index = editors["part_" + (box.ancestors()[2].ancestors()[1].id.split('-')[1] - 1)  + "_content"];
+      var wym_index = editors["part_" + (box.ancestors()[2].ancestors()[1].id.split('-')[1])  + "_content"];
       var wymm = WYMeditor.INSTANCES[wym_index];
       wymm.insert(tag);
     }
   });
-  
-  new Draggable('asset-bucket');
-}
 
+}
 
 /**
  * Adjusts the height of the iframe when the content of the visual editor is
