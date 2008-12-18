@@ -1,3 +1,5 @@
-<% ['/wymeditor/jquery/jquery.js',
-  '/wymeditor/wymeditor/jquery.wymeditor.js',
-  '/javascripts/radiant.wymeditor.js'].each {|script| @javascripts << script} %>
+<%
+  ['/wymeditor/jquery/jquery.js',
+   '/wymeditor/wymeditor/jquery.wymeditor.js',
+   '/javascripts/extensions/wym_editor_filter/radiant.wymeditor.js'].each {|script| @javascripts << script}
+%>
