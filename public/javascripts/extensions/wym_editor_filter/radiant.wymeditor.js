@@ -44,7 +44,8 @@ function init_load_wym_editor(){
     var parts = $$('.part');
     for (var i = 0; i < parts.length; i++)
     {
-			var part_name = parts[i].id.split("-")[1]
+			if (/part-([\w\d-]+)/i.test(parts[i].id))
+	      var part_name = RegExp.$1;
       if ($F('part_' + part_name + '_filter_id') == 'WymEditor') {
 				// mark textarea's that need to be wymified
 				$('part_'+part_name+'_content').addClassName('wymified');
