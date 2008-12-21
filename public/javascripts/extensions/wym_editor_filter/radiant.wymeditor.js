@@ -359,13 +359,14 @@ function unboot_wym(elem){
  */
 function unboot_all_wym() {
 // save button clicked, update all wym instances
-  if ($('part_0_filter_id'))                        // We're on the page edit screen
-  {
-    for(var i=0;i<$$(".part").length;i++) {
+  if ($('pages'))        		                // We're on the page edit screen
+	{
+		var parts = $$('.part');
+    for(var i=0;i< parts.length;i++) {
+			var part_name = parts[i].id.split("-")[1]
       // Find all parts that have WYM set as filter
-      filter_select = $("part_" + i + "_filter_id");
-      if(filter_select.value == 'WymEditor'){
-        unboot_wym($('part_'+ i +'_content'));
+      if ($F('part_' + part_name + '_filter_id') == 'WymEditor') {
+        unboot_wym($('part_'+ part_name +'_content'));
       } 
     }
   } else if ($('snippet_filter')) {                // We're on the snippet edit screen
