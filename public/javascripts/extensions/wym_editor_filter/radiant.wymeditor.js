@@ -320,7 +320,7 @@ function unboot_wym(elem){
   // and http://localhost:3000/page_attachments
 
   // fix urls to page attachments
-  var regex = new RegExp('src="([\.\/]+)/page_attachments', 'g');
+  var regex = new RegExp('src="((http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?([\.\/]+)|([\.\/]+))page_attachments', 'g');
   var m = content.match(regex);
   if(!(m == null)) {
     for(var i=0; i<m.length; i++) {
@@ -330,7 +330,7 @@ function unboot_wym(elem){
   }
 
   // fix urls to assets
-  var regex = new RegExp('src="([\.\/]+)/assets', 'g');
+  var regex = new RegExp('src="((http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?([\.\/]+)|([\.\/]+))assets', 'g');
   var m = content.match(regex);
   if(!(m == null)) {
     for(var i=0; i<m.length; i++) {
