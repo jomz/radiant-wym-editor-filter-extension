@@ -316,9 +316,6 @@ function unboot_wym(elem){
     }
   }
 
-  // TODO: update regalar expression to also match http://localhost:3000/assets
-  // and http://localhost:3000/page_attachments
-
   // fix urls to page attachments
   var regex = new RegExp('src="((http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?([\.\/]+)|([\.\/]+))page_attachments', 'g');
   var m = content.match(regex);
