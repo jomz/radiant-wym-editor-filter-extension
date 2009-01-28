@@ -150,3 +150,8 @@
             
 /*WYMEDITOR_LINK*/
         a.wym_wymeditor_link        { visibility: hidden;  }
+
+/*SCROLLFOLLOW*/
+
+        #wym_right { float: right; }
+        #wym_area_right { position: relative; }

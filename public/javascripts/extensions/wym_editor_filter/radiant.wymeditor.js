@@ -14,12 +14,12 @@ var editors = new Array();
 // references to the content height adjustment timers
 var timers = new Array();
 
-// These tokens are for Radiant CMS radius tags  
+// These tokens are for Radiant CMS radius tags
 //XhtmlLexer.prototype.addTokens = function()
 //{
 //  this.addEntryPattern("</?r:", 'Text', 'Text');
-//  this.addExitPattern(">", 'Text'); 
-//  
+//  this.addExitPattern(">", 'Text');
+//
 //  this.addCommentTokens('Text');
 //  this.addScriptTokens('Text');
 //  this.addCssTokens('Text');
@@ -56,7 +56,7 @@ function init_load_wym_editor(){
 		for (var i = 0; i < ta.length; i++){
 			boot_wym(ta[i]);
 		}
-		
+
   } else {
     if ($F('snippet_filter') == 'WymEditor') {
 			boot_wym(jQuery('.textarea')[0]);
@@ -251,10 +251,16 @@ function boot_wym(elem) {
       // map the index of this instance to it's page_part
       editors[elem.id] = wym._index;
 
-      // enhancements to the editor
+      // bind assets dropping
       bind_droppability(wym._iframe);
+
+      // grow iframe on typing
       timers[elem.id] = setInterval(function(){ adjustFramesize(wym._iframe); }, 20);
-    },
+
+      // scroll right box
+      jQuery('#wym_area_right').scrollFollow();
+
+     },
 
     /**
      * Initialize the editor before construction of the visual editor:
@@ -387,7 +393,7 @@ function bind_droppability(box) {
     accept: 'asset',
 
     /* An element has been dropped into the iframe
-     * 
+     *
      * @param element - the dropped element
      */
     onDrop: function(element) {
@@ -419,7 +425,9 @@ function bind_droppability(box) {
  * changed.
  */
 function adjustFramesize(iframe) {
-  iframe.style.height = (iframe.contentWindow.document.body.offsetHeight + 35) + "px";
+  height = (iframe.contentWindow.document.body.offsetHeight + 35) + "px";
+  iframe.style.height = height;
+  jQuery("#wym_right").css({'height': height});
 }
 
 /**
@@ -571,7 +579,7 @@ function initBlockUI(wym, dialogType) {
 
   var selected = wym.selected();
   var sStamp = wym.uniqueStamp();
-  
+
   switch(dialogType) {
 
   case WYMeditor.DIALOG_LINK:
@@ -701,7 +709,7 @@ function initBlockUI(wym, dialogType) {
     .html(wym.xhtml());
 
   //cancel button
-  
+
   jQuery(wym._options.cancelSelector).mousedown(function() {
       jQuery.unblockUI();
       jQuery(document).unbind("keypress", blockUIKeys);

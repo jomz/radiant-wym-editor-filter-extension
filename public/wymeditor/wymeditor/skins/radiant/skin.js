@@ -33,5 +33,9 @@ WYMeditor.SKINS['radiant'] = {
         },function(){
           jQuery(this).removeClass("hover");
         });
+
+        //assign ids
+        jQuery("div.wym_area_right").wrap("<div id='wym_right'></div>");
+        jQuery(wym._box).find("div.wym_area_right").attr("id","wym_area_right");
     }
 };
