@@ -1,0 +1,2 @@
+= observe_field("part_#{page_part.name.to_slug}_filter_id", :function => "text_input_method('#{page_part.name.to_slug}', value)")
+= "<script type=\"text/javascript\">boot_wym($(\"part_#{page_part.name.to_slug}_content\"));</script>" if page_part.filter_id == 'WymEditor'
