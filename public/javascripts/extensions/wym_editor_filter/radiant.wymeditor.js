@@ -258,7 +258,8 @@ function boot_wym(elem) {
       timers[elem.id] = setInterval(function(){ adjustFramesize(wym._iframe); }, 20);
 
       // scroll right box
-      jQuery('#wym_area_right').scrollFollow();
+      jQuery('#wym_area_right').scrollFollow({ speed: 250, offset: -1 });
+      jQuery('#wym_area_top').scrollFollow({ speed: 250, offset: -1 });
 
      },
 
@@ -425,7 +426,11 @@ function bind_droppability(box) {
  * changed.
  */
 function adjustFramesize(iframe) {
-  height = (iframe.contentWindow.document.body.offsetHeight + 35) + "px";
+  if (jQuery.browser.msie) {
+    height = (iframe.contentWindow.document.body.scrollHeight + 35) + "px";
+  } else {
+    height = (iframe.contentWindow.document.body.offsetHeight + 35) + "px";
+  }
   iframe.style.height = height;
   jQuery("#wym_right").css({'height': height});
 }

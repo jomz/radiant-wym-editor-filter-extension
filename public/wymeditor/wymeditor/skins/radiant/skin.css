@@ -49,7 +49,7 @@
 
 
 /*WYM_IFRAME*/
-        .wym_skin_radiant .wym_iframe             { width: 98%;}
+        .wym_skin_radiant .wym_iframe             { width: 98%; margin-top: -7px; border: 0px; }
         .wym_skin_radiant .wym_iframe iframe      { width: 100%; height: 450px; border: 1px solid #CDC295; background: white }
 
 
@@ -59,7 +59,7 @@
         .wym_skin_radiant .wym_area_bottom        { height: 1%; clear: both;}
  * html .wym_skin_radiant .wym_area_main          { height: 1%;}
  * html .wym_skin_radiant .wym_area_top           { height: 1%;}
- *+html .wym_skin_radiant .wym_area_top           { height: 1%;}
+ *+html .wym_skin_radiant .wym_area_top           { height: 1%; }
 
 /*SECTIONS SYSTEM*/
 
@@ -153,5 +153,10 @@
 
 /*SCROLLFOLLOW*/
 
-        #wym_right { float: right; }
+        #wym_right { float: right; height: 0px; width: 150px; }
         #wym_area_right { position: relative; }
+        * html #wym_area_right { padding-right: 20px; }
+        *+html #wym_area_right { padding-right: 20px; }
+        #wym_area_top { position: relative; z-index: 200; margin-right: 153px; }
+        #wym_toolbar { width: 98%; background: #fff; padding-top: 8px; padding-bottom: 5px; border-bottom: 1px solid #CDC295;  }
+
