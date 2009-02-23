@@ -253,7 +253,8 @@ function boot_wym(elem) {
 
       // enhancements to the editor
       bind_droppability(wym._iframe);
-      timers[elem.id] = setInterval(function(){ adjustFramesize(wym._iframe); }, 20);
+			if (!jQuery.browser.msie)
+				timers[elem.id] = setInterval(function(){ adjustFramesize(wym._iframe); }, 20);
     },
 
     /**
