@@ -4,7 +4,7 @@ Wym Editor Filter
 <table>
     <tr>
         <td>Author</td>
-        <td>Benny Degezelle - [gorilla-webdesign.be](http://www.gorilla-webdesign.be)</td>
+        <td>Benny Degezelle - <a href="http://www.gorilla-webdesign.be">Gorilla Webdesign</a></td>
     </tr>
     <tr>
         <td>Version</td>
@@ -31,7 +31,7 @@ specifications and to facilitate further processing by modern applications.
 
 Find out more about WYM editor at [http://www.wymeditor.org](http://www.wymeditor.org)
 
-<img src="../../raw/master/wym_editor_filter.png" width="587" height="574" alt="WymEditor in action">
+<img src="../raw/master/wym_editor_filter.png" width="587" height="574" alt="WymEditor in action">
 
 Requirements
 ------------
@@ -105,7 +105,7 @@ Sponsors
 Some work has been kindly sponsored by:
 
 * [Gorilla Webdesign](http://www.gorilla-webdesign.be)
-* [ScreenConcept](http://www.screenconcept.ch).
+* [ScreenConcept](http://www.screenconcept.ch)
 
 License
 -------
