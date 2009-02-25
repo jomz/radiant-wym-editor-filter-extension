@@ -42,12 +42,19 @@ If your Radiant is pre-0.6.7, you need the [shards extension](http://groups.goog
 Installation
 ------------
 
-Run this `rake command to copy all needed files into the public folder:
+Run this `rake` command to copy all needed files into the public folder:
 
 	rake radiant:extensions:wym_editor_filter:install
 
 That's it! You should now have "Wym Editor" in the filters dropdown on the page edit screen.
 Selecting this will spawn a WYMeditor instance.
+
+Update
+------
+
+Run this `rake` command to update all files in public folder:
+
+    rake radiant:extensions:wym_editor_filter:update
 
 Changelog
 ---------
