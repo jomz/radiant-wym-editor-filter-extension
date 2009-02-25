@@ -20,6 +20,9 @@
  *        Michael Kessler (michi a-t netzpiraten dotch)
 */
 
+  @namespace "http://www.w3.org/1999/xhtml";
+  @namespace r "http://radiantcms.org";
+
   html { overflow: hidden; }
 
 /* VISUAL FEEDBACK */
@@ -102,3 +105,47 @@
 }
 
 a:link, a:visited, a:focus, a:hover, a:active { color: blue; }
+
+/*RADIUS CODE*/
+
+.radius_tag {
+    margin: 2px;
+    padding: 2px;
+    border: 0px;
+    display: block;
+    background: #f5f1e2;
+}
+
+.radius_empty_tag {
+    border: 1px solid #cdc295;
+    padding: 8px 25px 5px;
+    margin: 10px !important;
+}
+
+.radius_start_tag {
+    padding: 0px;
+    margin: 10px;
+    border-top: 1px solid #cdc295;
+    border-right: 1px dashed #cdc295;
+    border-left: 1px dashed #cdc295;
+    border-bottom: 1px solid #cdc295;
+}
+
+.radius_start_tag .radius_code {
+    margin: 0px;
+}
+
+.radius_end_tag {
+    border: 0px;
+    padding: 8px 5px 5px;
+    margin: 0px;
+}
+
+.radius_code {
+    background: #f5e3e3 url('/images/admin/wymeditor_radius_code.png') no-repeat scroll 5px 9px;
+    padding-left: 35px;
+    padding-top: 7px;
+    padding-bottom: 0px;
+    color: #866;
+    height: 30px;
+}

@@ -15,16 +15,17 @@ var editors = new Array();
 var timers = new Array();
 
 // These tokens are for Radiant CMS radius tags
-//XhtmlLexer.prototype.addTokens = function()
-//{
-//  this.addEntryPattern("</?r:", 'Text', 'Text');
-//  this.addExitPattern(">", 'Text');
-//
-//  this.addCommentTokens('Text');
-//  this.addScriptTokens('Text');
-//  this.addCssTokens('Text');
-//  this.addTagTokens('Text');
-//}
+WYMeditor.XhtmlLexer.prototype.addTokens = function()
+{
+  this.addEntryPattern("</?r:", 'Text', 'Text');
+  this.addExitPattern(">", 'Text');
+
+  this.addCommentTokens('Text');
+  this.addScriptTokens('Text');
+  this.addCssTokens('Text');
+  this.addTagTokens('Text');
+}
+
 
 /**
  * Loads the WYMeditor for page parts where "WymEditor" is the selected text
@@ -119,11 +120,9 @@ function boot_wym(elem) {
 		   'css': 'color: #333; border: 2px solid #ccc;'},
 		  {'name': '.narrow',
 		   'css': 'color: #666; border: 2px solid #CCC;'},
-		  {'name': '.radius_tag',
-       'css': 'height:31px; background:url(/images/admin/wef_radiustag_bg.gif) no-repeat 0 0;'},
-      {'name': 'div',
-       'css': 'background:#fafceb url(/images/admin/lbl-div.png) no-repeat 2px 2px; margin:10px; padding:10px;'}
-    ],
+          {'name': 'div',
+           'css': 'background:#fafceb url(/images/admin/lbl-div.png) no-repeat 2px 2px; margin:10px; padding:10px;'}
+        ],
 
     dialogLinkHtml:  "<body class='wym_dialog wym_dialog_link'"
                + " onload='WYMeditor.INIT_DIALOG(" + WYMeditor.INDEX + ")'"
@@ -264,7 +263,7 @@ function boot_wym(elem) {
     /**
      * Initialize the editor before construction of the visual editor:
      *
-     * - convert radius tags
+     * - convert radius tags to special editable tags
      *
      * @param wym - the editor
      */
@@ -273,20 +272,30 @@ function boot_wym(elem) {
       // get editor content
       var content = (wym._html);
 
-      // convert radius tags to hr element images representations
+      // convert radius tags to wym_radius_edit tags
       var m = content.match(/(<r:([^\/><]*)?\/?>)|(<\/r:([^>]*)?>)/g);
       if (!(m == null)) {
         for (var i=0; i < m.length; i++) {
-          var title = m[i].replace(/"/g, "'");
-          title = title.substring(1,title.length-1);
+          var tag = m[i].replace(/"/g, "'");
+          var code = tag.replace(/^<\/?r:/g, "").replace(/\/?>$/g, "");
           var match = escape(m[i].substring(1,m[i].length - 1));
           var regex = new RegExp('(' + m[i] + ')', 'i');
-          var content = content.replace(regex, '<hr class="radius_tag" title="' + title + '" />');
+          if (tag.substring(tag.length-2,tag.length)=='/>') {
+            // empty element tag
+            var content = content.replace(regex, '<r:wym_radius_edit class="radius_tag radius_code radius_empty_tag">' + code + '</r:wym_radius_edit>');
+          } else if (tag.substring(0,2)=='</') {
+            // end tag
+            var content = content.replace(regex, '<r:wym_radius_edit class="radius_tag radius_code radius_end_tag">' + code + '</r:wym_radius_edit></r:wym_radius_edit>');
+          } else {
+            // start tag
+            var content = content.replace(regex, '<r:wym_radius_edit class="radius_tag radius_start_tag"><r:wym_radius_edit class="radius_tag radius_code">' + code + '</r:wym_radius_edit>');
+          }
         }
       }
 
       // save converted html
       wym._html = content;
+        
     }
 
   });
@@ -296,7 +305,7 @@ function boot_wym(elem) {
  * Unboots the WYMeditor:
  *
  *  - remove the wym editor div element
- *  - convert radius images to tags
+ *  - convert wym editor radius edit areas back to normal radius tags
  *  - fix page attachments and assets URLs.
  *
  * @param elem - the original text area
@@ -313,12 +322,32 @@ function unboot_wym(elem){
   var id = editors[elem.id];
   var content = WYMeditor.INSTANCES[id].xhtml();
 
-  // revert images to radius tags
-  var regex = new RegExp('<hr class="radius_tag" title="(.*?)" />', 'gi');
+  // convert wym_radius_edit empty tags back to radius tags
+  var regex = new RegExp('<r:wym_radius_edit class="radius_tag radius_code radius_empty_tag">(.*?)</r:wym_radius_edit>', 'gi');
   var m = content.match(regex);
   if (!(m == null)) {
     for (var i=0; i<m.length; i++) {
-      var match = unescape(m[i].replace(regex, '<$1>'));
+      var match = unescape(m[i].replace(regex, '<r:$1 />'));
+      var content = content.replace(m[i], match);
+    }
+  }
+
+  // convert wym_radius_edit empty tags back to radius tags
+  var regex = new RegExp('<r:wym_radius_edit class="radius_tag radius_code radius_end_tag">(.*?)</r:wym_radius_edit></r:wym_radius_edit>', 'gi');
+  var m = content.match(regex);
+  if (!(m == null)) {
+    for (var i=0; i<m.length; i++) {
+      var match = unescape(m[i].replace(regex, '</r:$1>'));
+      var content = content.replace(m[i], match);
+    }
+  }
+
+  // convert wym_radius_edit end tags back to radius tags
+  var regex = new RegExp('<r:wym_radius_edit class="radius_tag radius_start_tag"><r:wym_radius_edit class="radius_tag radius_code">(.*?)</r:wym_radius_edit>', 'gi');
+  var m = content.match(regex);
+  if (!(m == null)) {
+    for (var i=0; i<m.length; i++) {
+      var match = unescape(m[i].replace(regex, '<r:$1>'));
       var content = content.replace(m[i], match);
     }
   }
@@ -347,7 +376,7 @@ function unboot_wym(elem){
   // <r:assets:image title="foo" /> (but must keep image resizing from the visual editor)
 
   // update textarea content
-  elem.value = content;
+  elem.value = style_html(content);
 
   // show textarea again
   jQuery(elem).show();
