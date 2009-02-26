@@ -153,10 +153,9 @@
 
 /*SCROLLFOLLOW*/
 
-        #wym_right { float: right; height: 0px; width: 150px; }
-        #wym_area_right { position: relative; }
-        * html #wym_area_right { padding-right: 20px; }
-        *+html #wym_area_right { padding-right: 20px; }
-        #wym_area_top { position: relative; z-index: 200; margin-right: 153px; }
-        #wym_toolbar { width: 98%; background: #fff; padding-top: 8px; padding-bottom: 5px; border-bottom: 1px solid #CDC295;  }
+        .wym_tools { width: 98%; background: #fff; padding-top: 8px; padding-bottom: 5px; border-bottom: 1px solid #CDC295;  }
+        .wym_area_top { position: relative; z-index: 200; margin-right: 153px; }
+        .wym_area_right { position: relative; }
+        * html .wym_area_right { padding-right: 20px; }
+        *+html .wym_area_right { padding-right: 20px; }
 
