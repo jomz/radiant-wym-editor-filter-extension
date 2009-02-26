@@ -246,7 +246,7 @@ function boot_wym(elem) {
      * @param wym - the editor
      */
     postInit: function(wym) {
-
+        
       // map the index of this instance to it's page_part
       editors[elem.id] = wym._index;
 
@@ -256,9 +256,14 @@ function boot_wym(elem) {
       // grow iframe on typing
       timers[elem.id] = setInterval(function(){ adjustFramesize(wym._iframe); }, 20);
 
+      //assign ids
+      jQuery(wym._box).find("div.wym_area_top").parent().attr("id", "wym_box_" + elem.id);
+      jQuery(wym._box).find("div.wym_area_top").attr("id","wym_area_top_" + elem.id);
+      jQuery(wym._box).find("div.wym_area_right").attr("id","wym_area_right_" + elem.id);
+
       // scroll right box
-      jQuery('#wym_area_right').scrollFollow({ speed: 250, offset: -1 });
-      jQuery('#wym_area_top').scrollFollow({ speed: 250, offset: -1 });
+      jQuery('#wym_area_right_' + elem.id).scrollFollow({ speed: 100, container: "wym_box_" + elem.id, offset: -1 });
+      jQuery('#wym_area_top_' + elem.id).scrollFollow({ speed: 100, container: "wym_box_" + elem.id, offset: -1  });
 
      },
 
