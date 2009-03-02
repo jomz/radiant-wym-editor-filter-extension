@@ -38,7 +38,7 @@
 ( function( $ ) {
 	
 	$.scrollFollow = function ( box, options )
-	{ 
+	{
 		// Convert box into a jQuery object
 		box = $( box );
 		
@@ -58,8 +58,12 @@
 			var parentHeight = parseInt( box.cont.attr( 'offsetHeight' ) );
 			var boxHeight = parseInt( box.attr( 'offsetHeight' ) + ( parseInt( box.css( 'marginTop' ) ) || 0 ) + ( parseInt( box.css( 'marginBottom' ) ) || 0 ) );
 			var aniTop;
-			
-			// Make sure the user wants the animation to happen
+
+            // Finds the default positioning of the box.
+		    box.initialOffsetTop =  parseInt( box.cont.offset().top );
+		    box.initialTop = parseInt( box.cont.css( 'top' ) ) || 0;
+ 
+            // Make sure the user wants the animation to happen
 			if ( isActive )
 			{
 				// If the box should animate relative to the top of the window
@@ -88,7 +92,7 @@
 						aniTop = Math.min( ( pageScroll + viewportHeight - boxHeight - options.offset ), ( parentHeight - boxHeight ) );
 					}
 				}
-				
+
 				// Checks to see if the relevant scroll was the last one
 				// "-20" is to account for inaccuracy in the timeout
 				if ( ( new Date().getTime() - box.lastScroll ) >= ( options.delay - 20 ) )
@@ -181,11 +185,7 @@
 		{
 			box.cont = $( '#' + options.container );
 		}
-		
-		// Finds the default positioning of the box.
-		box.initialOffsetTop =  parseInt( box.offset().top );
-		box.initialTop = parseInt( box.css( 'top' ) ) || 0;
-		
+
 		// Hack to fix different treatment of boxes positioned 'absolute' and 'relative'
 		if ( box.css( 'position' ) == 'relative' )
 		{
