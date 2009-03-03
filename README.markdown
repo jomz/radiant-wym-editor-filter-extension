@@ -22,8 +22,11 @@ This filter adds a [WYSIWYM](http://en.wikipedia.org/wiki/WYSIWYM) editor to [Ra
 
 The WYMeditor is aware of and interacts with the following extensions, but these are not required:
 
-- [Paperclipped](http://github.com/kbingman/paperclipped/tree/master)
+- [Paperclipped](http://github.com/kbingman/paperclipped/tree/master) 
+   - Open the asset bucket from the WYMeditor toolbar
+   - Adding asset with drag'n'drop from the bucket
 - [Page Preview](http://github.com/tricycle/radiant-page-preview-extension/tree/master)
+   - Open preview from the WYMeditor toolbar
 
 About WYMeditor
 ---------------
@@ -48,6 +51,8 @@ Run this `rake` command to copy all needed files into the public folder:
 That's it! You should now have "Wym Editor" in the filters dropdown on the page edit screen.
 Selecting this will spawn a WYMeditor instance.
 
+It's a good idea to manage your extensions with [Ray](http://github.com/johnmuhl/radiant-ray-extension/tree/master).
+
 Update
 ------
 
@@ -62,7 +67,7 @@ Changelog
 
 - The toolbar, container and classes follows the page scrolling for easier editing.
 - Pop-ups are replaced with BlockUI (except for Internet Explorer).
-- Insert image button uses Paperclipped if installed.
+- Insert image button uses [Paperclipped](http://github.com/kbingman/paperclipped/tree/master) if installed.
 - Radius tags are editable in WymEditor.
 - Fixed the problem where WymEditor 'cleaned' the XHTML when Radius tags have been placed within block elements.
 
@@ -72,7 +77,7 @@ Changelog
 - Move javascript into extension folder.
 - Updated editor & dialogs CSS to better fit into Radiant.
 - Auto-growing the editor when content gets longer than it can show.
-- Preview button uses radiant-preview-extension if installed.
+- Preview button uses [Page Preview](http://github.com/tricycle/radiant-page-preview-extension/tree/master) if installed.
 
 ### 0.3.4
 
