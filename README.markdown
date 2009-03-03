@@ -1,5 +1,5 @@
-Wym Editor Filter
-=================
+Radiant *Wym Editor Filter* Extension
+===================================
 
 <table>
     <tr>
@@ -16,9 +16,14 @@ Wym Editor Filter
     </tr>
 </table>
 
-This filter adds a WYSIWYM editor to Radiant.
+This filter adds a [WYSIWYM](http://en.wikipedia.org/wiki/WYSIWYM) editor to [Radiant](http://www.radiantcms.org/).
 
-It is aware of and interacts with the paperclipped and preview extension, but these are not required.
+### Integration
+
+The WYMeditor is aware of and interacts with the following extensions, but these are not required:
+
+- [Paperclipped](http://github.com/kbingman/paperclipped/tree/master)
+- [Page Preview](http://github.com/tricycle/radiant-page-preview-extension/tree/master)
 
 About WYMeditor
 ---------------
@@ -26,18 +31,12 @@ About WYMeditor
 WYMeditor's main concept is to leave details of the document's visual layout, and to concentrate on its structure and
 meaning, while trying to give the user as much comfort as possible (at least as WYSIWYG editors).
 
-WYMeditor has been created to generate perfectly structured XHTML strict code, to conform to the W3C XHTML
+WYMeditor has been created to generate perfectly structured XHTML strict code, to conform to the [W3C XHTML](http://www.w3.org/TR/xhtml1/)
 specifications and to facilitate further processing by modern applications.
 
-Find out more about WYM editor at [http://www.wymeditor.org](http://www.wymeditor.org)
+Find out more about WYM editor at [http://www.wymeditor.org](http://www.wymeditor.org).
 
 <img src="../raw/master/wym_editor_filter.png" width="587" height="574" alt="WymEditor in action">
-
-Requirements
-------------
-
-If your Radiant is pre-0.6.7, you need the [shards extension](http://groups.google.com/group/radiantcms-dev/browse_frm/thread/d07f7fffd84b3ce0/5efa6fd6c2e1668e?lnk=gst&q=shards#5efa6fd6c2e1668e)
-
 
 Installation
 ------------
@@ -63,34 +62,32 @@ Changelog
 
 - The toolbar, container and classes follows the page scrolling for easier editing.
 - Pop-ups are replaced with BlockUI (except for Internet Explorer).
-- Insert image button uses Paperclipped if installed  .
+- Insert image button uses Paperclipped if installed.
 - Radius tags are editable in WymEditor.
 - Fixed the problem where WymEditor 'cleaned' the XHTML when Radius tags have been placed within block elements.
 
 ### 0.3.5
 
-- Updated to wym 0.5b-2
-- Move javascript into extension folder
+- Updated to WYMeditor 0.5b-2
+- Move javascript into extension folder.
 - Updated editor & dialogs CSS to better fit into Radiant.
 - Auto-growing the editor when content gets longer than it can show.
 - Preview button uses radiant-preview-extension if installed.
 
-Big thanks for all that to netzpirat (Michael Kessler)!!
-
 ### 0.3.4
 
-- Updated to wym 0.5a-2
+- Updated to WYMeditor 0.5a-2
 - Fixed bug where on_save, all edits made after switching to a different filter were lost.
 
 ### 0.3.3
 
 - Removed svn:external to wymeditor, managed through braid now.
-- Updated to wym 0.5a-1
-- Fixed empty <td> problem
+- Updated to WYMeditor 0.5a-1
+- Fixed empty <td> problem.
 
 ### 0.3.2
 
-- Updated to work with radiant 0.6.5 (Thanks to David Piehler and Tim Blair)
+- Updated to work with radiant 0.6.5
 
 ### 0.3.1
 
