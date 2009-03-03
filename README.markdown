@@ -59,6 +59,14 @@ Run this `rake` command to update all files in public folder:
 Changelog
 ---------
 
+### Current Head
+
+- The toolbar, container and classes follows the page scrolling for easier editing.
+- Pop-ups are replaced with BlockUI (except for Internet Explorer).
+- Insert image button uses Paperclipped if installed  .
+- Radius tags are editable in WymEditor.
+- Fixed the problem where WymEditor 'cleaned' the XHTML when Radius tags have been placed within block elements.
+
 ### 0.3.5
 
 - Updated to wym 0.5b-2
