@@ -65,11 +65,12 @@ Changelog
 
 ### Current Head
 
-- The toolbar, container and classes follows the page scrolling for easier editing.
-- Pop-ups are replaced with BlockUI (except for Internet Explorer).
-- Insert image button uses [Paperclipped](http://github.com/kbingman/paperclipped/tree/master) if installed.
-- Radius tags are editable in WymEditor.
-- Fixed the problem where WymEditor 'cleaned' the XHTML when Radius tags have been placed within block elements.
+- On long pages, the toolbar, container and classes selector boxes follows the page scrolling for easier editing.
+- Pop-ups are replaced with [BlockUI](http://malsup.com/jquery/block/), except for Internet Explorer (see [Ticket](http://trac.wymeditor.org/trac/ticket/63)).
+- The insert image button uses [Paperclipped](http://github.com/kbingman/paperclipped/tree/master) if installed.
+- Radius tags are now editable in WYMeditor.
+- Fixed the problem where WYMeditor 'cleaned' the XHTML when Radius tags have been placed within block elements.
+- Generated XHTML code will be formatted using [js-beatuty](http://github.com/einars/js-beautify/tree/master)
 
 ### 0.3.5
 
@@ -96,7 +97,7 @@ Changelog
 
 ### 0.3.1
 
-- Fixed includes for opera & safari, now works fine on those browsers too.
+- Fixed includes for Opera & Safari, now works fine on those browsers too.
 
 ### 0.3
 
