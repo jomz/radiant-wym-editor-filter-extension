@@ -509,7 +509,16 @@ WYMeditor.editor.prototype.exec = function(cmd) {
     break;
 
     case WYMeditor.INSERT_IMAGE:
-      this.dialog(WYMeditor.DIALOG_IMAGE);
+      if (jQuery('#show-bucket')) {
+        if (jQuery("#asset-bucket").is(':visible')) {
+            jQuery("#asset-bucket").hide();
+        } else {
+            jQuery("#asset-bucket").show();
+            center($('asset-bucket'));
+        }
+      } else {
+        this.dialog(WYMeditor.DIALOG_IMAGE);
+      }
     break;
 
     case WYMeditor.INSERT_TABLE:
