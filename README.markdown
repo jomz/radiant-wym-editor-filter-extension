@@ -8,7 +8,7 @@ Radiant *Wym Editor Filter* Extension
     </tr>
     <tr>
         <td>Version</td>
-        <td>0.3.5</td>
+        <td>0.4</td>
     </tr>
     <tr>
         <td>Contact:</td>
@@ -63,7 +63,7 @@ Run this `rake` command to update all files in public folder:
 Changelog
 ---------
 
-### Current Head
+### 0.4
 
 - On long pages, the toolbar, container and classes selector boxes follows the page scrolling for easier editing.
 - Pop-ups are replaced with [BlockUI](http://malsup.com/jquery/block/), except for Internet Explorer (see [Ticket](http://trac.wymeditor.org/trac/ticket/63)).
