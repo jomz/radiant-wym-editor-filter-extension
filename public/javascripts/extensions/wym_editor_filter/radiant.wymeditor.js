@@ -278,7 +278,7 @@ function boot_wym(elem) {
       var content = (wym._html);
 
       // convert radius tags to wym_radius_edit tags
-      var m = content.match(/(<r:([^\/><]*)?\/?>)|(<\/r:([^>]*)?>)/g);
+      var m = content.match(/(<r:([^>]*)?\/?>)|(<\/r:([^>]*)?>)/g);
       if (!(m == null)) {
         for (var i=0; i < m.length; i++) {
           var tag = m[i].replace(/"/g, "'");
