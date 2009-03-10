@@ -49,7 +49,7 @@
 
 
 /*WYM_IFRAME*/
-        .wym_skin_radiant .wym_iframe             { width: 98%;}
+        .wym_skin_radiant .wym_iframe             { width: 98%; margin-top: -7px; border: 0px; }
         .wym_skin_radiant .wym_iframe iframe      { width: 100%; height: 450px; border: 1px solid #CDC295; background: white }
 
 
@@ -59,7 +59,7 @@
         .wym_skin_radiant .wym_area_bottom        { height: 1%; clear: both;}
  * html .wym_skin_radiant .wym_area_main          { height: 1%;}
  * html .wym_skin_radiant .wym_area_top           { height: 1%;}
- *+html .wym_skin_radiant .wym_area_top           { height: 1%;}
+ *+html .wym_skin_radiant .wym_area_top           { height: 1%; }
 
 /*SECTIONS SYSTEM*/
 
@@ -125,25 +125,39 @@
         .wym_skin_radiant .wym_dropdown ul            { border: solid gray; border-width: 0 1px 1px 1px; margin-left: -1px; padding: 5px 10px 5px 3px;}
         
 /*DIALOGS*/
-        .wym_dialog fieldset        { background-color:#F5F1E2; padding: 20px; border: 1px solid #CDC295; font-family: "Lucida Grande","Bitstream Vera Sans",Helvetica,Verdana,Arial,sans-serif; font-size: 90%}
-        .wym_dialog legend          { font-weight: bold; font-size: 110% }
-        .wym_dialog label         { font-weight: bold; }
-        .wym_submit                 { font-size: 130% }
-        .wym_dialog div.row         { margin-bottom: 5px;}
-        .wym_dialog div.row-rows    { margin-top: 15px;}
-        .wym_dialog div.row-indent  { padding-top: 20px; }
-        .wym_dialog div.row input   { margin-right: 5px;}
-        .wym_dialog div.row label   { float: left; width: 150px; display: block; margin-right: 10px; }
+        .blockUI                                             { text-align: left !important; border: 15px !important; border: 6px solid rgb(170, 170, 170) !important; }
+        .blockUI fieldset                                    { margin: 10px; border: 2px solid #CDC295 !important; }
+        .wym_dialog fieldset, .blockUI fieldset              { background-color:#F5F1E2; padding: 20px; border: 1px solid #CDC295; font-family: "Lucida Grande","Bitstream Vera Sans",Helvetica,Verdana,Arial,sans-serif; font-size: 90%}
+        .wym_dialog legend, .blockUI legend                  { font-weight: bold; font-size: 110% }
+        .wym_dialog label, .blockUI label                    { font-weight: bold; }
+        .wym_submit                                          { font-size: 130% }
+        .wym_dialog div.row, .blockUI div.row                { margin-bottom: 5px;}
+        .wym_dialog div.row-rows, .blockUI div.row-rows      { margin-top: 15px;}
+        .wym_dialog div.row-indent, .blockUI div.row-indent  { padding-top: 20px; }
+        .wym_dialog div.row input, .blockUI div.row input    { margin-right: 5px;}
+        .wym_dialog div.row label, .blockUI div.row label    { float: left; width: 150px; display: block; margin-right: 10px; }
         /*autoclearing*/        
-        .wym_dialog div.row:after            { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
-        .wym_dialog div.row                  { display: inline-block; }
+        .wym_dialog div.row:after, .blockUI div.row:after    { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+        .wym_dialog div.row, .blockUI div.row                { display: inline-block; }
         .wym_caption, .wym_summary,
         .wym_src, .wym_alt, .wym_title, 
-        .wym_text, .wym_href                 { width: 99.5%; }
-            /* Hides from IE-mac \*/
-            * html .wym_dialog div.row       { height: 1%; }
-            .wym_dialog div.row              { display: block; }
-            /* End hide from IE-mac */                
+        .wym_text, .wym_href                                 { width: 99.5%; }
+        /* Hides from IE-mac \*/
+        * html .wym_dialog div.row                           { height: 1%; }
+        .wym_dialog div.row, .blockUI div.row                { display: block; }
+
+/* End hide from IE-mac */                
             
 /*WYMEDITOR_LINK*/
         a.wym_wymeditor_link        { visibility: hidden;  }
+
+/*SCROLLFOLLOW*/
+
+        .wym_tools { width: 98%; background: #fff; padding-top: 8px; padding-bottom: 5px; border-bottom: 1px solid #CDC295;  }
+        .wym_area_top { position: relative; z-index: 200; margin-right: 153px; }
+        .wym_area_right { position: relative; }
+        * html .wym_area_right { padding-right: 20px; }
+        *+html .wym_area_right { padding-right: 20px; }
+
+        #asset-bucket { z-index: 400; }
+

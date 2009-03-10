@@ -14,17 +14,18 @@ var editors = new Array();
 // references to the content height adjustment timers
 var timers = new Array();
 
-// These tokens are for Radiant CMS radius tags  
-//XhtmlLexer.prototype.addTokens = function()
-//{
-//  this.addEntryPattern("</?r:", 'Text', 'Text');
-//  this.addExitPattern(">", 'Text'); 
-//  
-//  this.addCommentTokens('Text');
-//  this.addScriptTokens('Text');
-//  this.addCssTokens('Text');
-//  this.addTagTokens('Text');
-//}
+// These tokens are for Radiant CMS radius tags
+WYMeditor.XhtmlLexer.prototype.addTokens = function()
+{
+  this.addEntryPattern("</?r:", 'Text', 'Text');
+  this.addExitPattern(">", 'Text');
+
+  this.addCommentTokens('Text');
+  this.addScriptTokens('Text');
+  this.addCssTokens('Text');
+  this.addTagTokens('Text');
+}
+
 
 /**
  * Loads the WYMeditor for page parts where "WymEditor" is the selected text
@@ -56,7 +57,7 @@ function init_load_wym_editor(){
 		for (var i = 0; i < ta.length; i++){
 			boot_wym(ta[i]);
 		}
-		
+
   } else {
     if ($F('snippet_filter') == 'WymEditor') {
 			boot_wym(jQuery('.textarea')[0]);
@@ -121,11 +122,33 @@ function boot_wym(elem) {
 		   'css': 'color: #333; border: 2px solid #ccc;'},
 		  {'name': '.narrow',
 		   'css': 'color: #666; border: 2px solid #CCC;'},
-		  {'name': '.radius_tag',
-       'css': 'height:31px; background:url(/images/admin/wef_radiustag_bg.gif) no-repeat 0 0;'},
-      {'name': 'div',
-       'css': 'background:#fafceb url(/images/admin/lbl-div.png) no-repeat 2px 2px; margin:10px; padding:10px;'}
-    ],
+          {'name': 'div',
+           'css': 'background:#fafceb url(/images/admin/lbl-div.png) no-repeat 2px 2px; margin:10px; padding:10px;'}
+        ],
+
+    toolsItems: [
+        {'name': 'Bold', 'title': 'Strong', 'css': 'wym_tools_strong'},
+        {'name': 'Italic', 'title': 'Emphasis', 'css': 'wym_tools_emphasis'},
+        {'name': 'Superscript', 'title': 'Superscript',
+            'css': 'wym_tools_superscript'},
+        {'name': 'Subscript', 'title': 'Subscript',
+            'css': 'wym_tools_subscript'},
+        {'name': 'InsertOrderedList', 'title': 'Ordered_List',
+            'css': 'wym_tools_ordered_list'},
+        {'name': 'InsertUnorderedList', 'title': 'Unordered_List',
+            'css': 'wym_tools_unordered_list'},
+        {'name': 'Indent', 'title': 'Indent', 'css': 'wym_tools_indent'},
+        {'name': 'Outdent', 'title': 'Outdent', 'css': 'wym_tools_outdent'},
+        {'name': 'Undo', 'title': 'Undo', 'css': 'wym_tools_undo'},
+        {'name': 'Redo', 'title': 'Redo', 'css': 'wym_tools_redo'},
+        {'name': 'CreateLink', 'title': 'Link', 'css': 'wym_tools_link'},
+        {'name': 'Unlink', 'title': 'Unlink', 'css': 'wym_tools_unlink'},
+        {'name': 'InsertImage', 'title': 'Image', 'css': 'wym_tools_image'},
+        {'name': 'InsertTable', 'title': 'Table', 'css': 'wym_tools_table'},
+        {'name': 'Paste', 'title': 'Paste_From_Word',
+            'css': 'wym_tools_paste'},
+        {'name': 'Preview', 'title': 'Preview', 'css': 'wym_tools_preview'}
+       ],
 
     dialogLinkHtml:  "<body class='wym_dialog wym_dialog_link'"
                + " onload='WYMeditor.INIT_DIALOG(" + WYMeditor.INDEX + ")'"
@@ -247,20 +270,37 @@ function boot_wym(elem) {
      * @param wym - the editor
      */
     postInit: function(wym) {
-
+        
       // map the index of this instance to it's page_part
       editors[elem.id] = wym._index;
 
-      // enhancements to the editor
+      // bind assets dropping
       bind_droppability(wym._iframe);
+<<<<<<< HEAD:public/javascripts/extensions/wym_editor_filter/radiant.wymeditor.js
 			if (!jQuery.browser.msie)
 				timers[elem.id] = setInterval(function(){ adjustFramesize(wym._iframe); }, 20);
     },
+=======
+
+      // grow iframe on typing
+      timers[elem.id] = setInterval(function(){ adjustFramesize(wym._iframe); }, 20);
+
+      //assign ids
+      jQuery(wym._box).find("div.wym_area_top").parent().attr("id", "wym_box_" + elem.id);
+      jQuery(wym._box).find("div.wym_area_top").attr("id","wym_area_top_" + elem.id);
+      jQuery(wym._box).find("div.wym_area_right").attr("id","wym_area_right_" + elem.id);
+
+      // scroll right box
+      jQuery('#wym_area_right_' + elem.id).scrollFollow({ speed: 100, container: "wym_box_" + elem.id, offset: -1 });
+      jQuery('#wym_area_top_' + elem.id).scrollFollow({ speed: 100, container: "wym_box_" + elem.id, offset: -1  });
+
+     },
+>>>>>>> 667d95948e42ec3ffa7d057bc2dd74b04c7f7017:public/javascripts/extensions/wym_editor_filter/radiant.wymeditor.js
 
     /**
      * Initialize the editor before construction of the visual editor:
      *
-     * - convert radius tags
+     * - convert radius tags to special editable tags
      *
      * @param wym - the editor
      */
@@ -269,20 +309,30 @@ function boot_wym(elem) {
       // get editor content
       var content = (wym._html);
 
-      // convert radius tags to hr element images representations
+      // convert radius tags to wym_radius_edit tags
       var m = content.match(/(<r:([^\/><]*)?\/?>)|(<\/r:([^>]*)?>)/g);
       if (!(m == null)) {
         for (var i=0; i < m.length; i++) {
-          var title = m[i].replace(/"/g, "'");
-          title = title.substring(1,title.length-1);
+          var tag = m[i].replace(/"/g, "'");
+          var code = tag.replace(/^<\/?r:/g, "").replace(/\/?>$/g, "");
           var match = escape(m[i].substring(1,m[i].length - 1));
           var regex = new RegExp('(' + m[i] + ')', 'i');
-          var content = content.replace(regex, '<hr class="radius_tag" title="' + title + '" />');
+          if (tag.substring(tag.length-2,tag.length)=='/>') {
+            // empty element tag
+            var content = content.replace(regex, '<r:wym_radius_edit class="radius_tag radius_code radius_empty_tag">' + code + '</r:wym_radius_edit>');
+          } else if (tag.substring(0,2)=='</') {
+            // end tag
+            var content = content.replace(regex, '<r:wym_radius_edit class="radius_tag radius_code radius_end_tag">' + code + '</r:wym_radius_edit></r:wym_radius_edit>');
+          } else {
+            // start tag
+            var content = content.replace(regex, '<r:wym_radius_edit class="radius_tag radius_start_tag"><r:wym_radius_edit class="radius_tag radius_code">' + code + '</r:wym_radius_edit>');
+          }
         }
       }
 
       // save converted html
       wym._html = content;
+        
     }
 
   });
@@ -292,7 +342,7 @@ function boot_wym(elem) {
  * Unboots the WYMeditor:
  *
  *  - remove the wym editor div element
- *  - convert radius images to tags
+ *  - convert wym editor radius edit areas back to normal radius tags
  *  - fix page attachments and assets URLs.
  *
  * @param elem - the original text area
@@ -309,21 +359,38 @@ function unboot_wym(elem){
   var id = editors[elem.id];
   var content = WYMeditor.INSTANCES[id].xhtml();
 
-  // revert images to radius tags
-  var regex = new RegExp('<hr class="radius_tag" title="(.*?)" />', 'gi');
+  // convert wym_radius_edit empty tags back to radius tags
+  var regex = new RegExp('<r:wym_radius_edit class="radius_tag radius_code radius_empty_tag">(.*?)</r:wym_radius_edit>', 'gi');
   var m = content.match(regex);
   if (!(m == null)) {
     for (var i=0; i<m.length; i++) {
-      var match = unescape(m[i].replace(regex, '<$1>'));
+      var match = unescape(m[i].replace(regex, '<r:$1 />'));
       var content = content.replace(m[i], match);
     }
   }
 
-  // TODO: update regalar expression to also match http://localhost:3000/assets
-  // and http://localhost:3000/page_attachments
+  // convert wym_radius_edit empty tags back to radius tags
+  var regex = new RegExp('<r:wym_radius_edit class="radius_tag radius_code radius_end_tag">(.*?)</r:wym_radius_edit></r:wym_radius_edit>', 'gi');
+  var m = content.match(regex);
+  if (!(m == null)) {
+    for (var i=0; i<m.length; i++) {
+      var match = unescape(m[i].replace(regex, '</r:$1>'));
+      var content = content.replace(m[i], match);
+    }
+  }
+
+  // convert wym_radius_edit end tags back to radius tags
+  var regex = new RegExp('<r:wym_radius_edit class="radius_tag radius_start_tag"><r:wym_radius_edit class="radius_tag radius_code">(.*?)</r:wym_radius_edit>', 'gi');
+  var m = content.match(regex);
+  if (!(m == null)) {
+    for (var i=0; i<m.length; i++) {
+      var match = unescape(m[i].replace(regex, '<r:$1>'));
+      var content = content.replace(m[i], match);
+    }
+  }
 
   // fix urls to page attachments
-  var regex = new RegExp('src="([\.\/]+)/page_attachments', 'g');
+  var regex = new RegExp('src="((http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?([\.\/]+)|([\.\/]+))page_attachments', 'g');
   var m = content.match(regex);
   if(!(m == null)) {
     for(var i=0; i<m.length; i++) {
@@ -333,7 +400,7 @@ function unboot_wym(elem){
   }
 
   // fix urls to assets
-  var regex = new RegExp('src="([\.\/]+)/assets', 'g');
+  var regex = new RegExp('src="((http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?([\.\/]+)|([\.\/]+))assets', 'g');
   var m = content.match(regex);
   if(!(m == null)) {
     for(var i=0; i<m.length; i++) {
@@ -346,7 +413,7 @@ function unboot_wym(elem){
   // <r:assets:image title="foo" /> (but must keep image resizing from the visual editor)
 
   // update textarea content
-  elem.value = content;
+  elem.value = style_html(content);
 
   // show textarea again
   jQuery(elem).show();
@@ -391,7 +458,7 @@ function bind_droppability(box) {
     accept: 'asset',
 
     /* An element has been dropped into the iframe
-     * 
+     *
      * @param element - the dropped element
      */
     onDrop: function(element) {
@@ -423,7 +490,13 @@ function bind_droppability(box) {
  * changed.
  */
 function adjustFramesize(iframe) {
-  iframe.style.height = (iframe.contentWindow.document.body.offsetHeight + 35) + "px";
+  if (jQuery.browser.msie) {
+    height = (iframe.contentWindow.document.body.scrollHeight + 35) + "px";
+  } else {
+    height = (iframe.contentWindow.document.body.offsetHeight + 35) + "px";
+  }
+  iframe.style.height = height;
+  jQuery("#wym_right").css({'height': height});
 }
 
 /**
@@ -434,10 +507,6 @@ function adjustFramesize(iframe) {
  */
 WYMeditor.editor.prototype.exec = function(cmd) {
 
-  // TODO: if browser is not ie, use BlockUI to show
-  // see http://trac.wymeditor.org/trac/ticket/63
-
-  //base function for execCommand
   //open a dialog or exec
   switch(cmd) {
     case WYMeditor.CREATE_LINK:
@@ -446,7 +515,16 @@ WYMeditor.editor.prototype.exec = function(cmd) {
     break;
 
     case WYMeditor.INSERT_IMAGE:
-      this.dialog(WYMeditor.DIALOG_IMAGE);
+      if (jQuery('#show-bucket')) {
+        if (jQuery("#asset-bucket").is(':visible')) {
+            jQuery("#asset-bucket").hide();
+        } else {
+            jQuery("#asset-bucket").show();
+            center($('asset-bucket'));
+        }
+      } else {
+        this.dialog(WYMeditor.DIALOG_IMAGE);
+      }
     break;
 
     case WYMeditor.INSERT_TABLE:
@@ -480,4 +558,244 @@ WYMeditor.editor.prototype.exec = function(cmd) {
       this._exec(cmd);
     break;
   }
+};
+
+/* Overwrite dialog creation of WYM editor. If the prowser is not IE,
+ * we use nice BlockUI dialogs instead of popups
+ *
+ * @param dialogType - the type of the dialog
+ * @param bodyHtml - the html for the body of the dialog
+ */
+WYMeditor.editor.prototype.dialog = function(dialogType, bodyHtml) {
+
+  if (jQuery.browser.msie) {
+    // IE must use pop-ups http://trac.wymeditor.org/trac/ticket/63
+    var wDialog = window.open(
+      '',
+      'dialog',
+      this._wym._options.dialogFeatures);
+  }
+
+  var sBodyHtml = "";
+
+  switch( dialogType ) {
+
+    case(WYMeditor.DIALOG_LINK):
+      sBodyHtml = this._options.dialogLinkHtml;
+    break;
+    case(WYMeditor.DIALOG_IMAGE):
+      sBodyHtml = this._options.dialogImageHtml;
+    break;
+    case(WYMeditor.DIALOG_TABLE):
+      sBodyHtml = this._options.dialogTableHtml;
+    break;
+    case(WYMeditor.DIALOG_PASTE):
+      sBodyHtml = this._options.dialogPasteHtml;
+    break;
+    case(WYMeditor.PREVIEW):
+      sBodyHtml = this._options.dialogPreviewHtml;
+    break;
+
+    default:
+      sBodyHtml = bodyHtml;
+  }
+
+  if(jQuery.browser.msie) {
+    var h = WYMeditor.Helper;
+
+    //construct the full dialog for IE
+    var dialogHtml = this._options.dialogHtml;
+    dialogHtml = h.replaceAll(dialogHtml, WYMeditor.BASE_PATH, this._options.basePath);
+    dialogHtml = h.replaceAll(dialogHtml, WYMeditor.DIRECTION, this._options.direction);
+    dialogHtml = h.replaceAll(dialogHtml, WYMeditor.CSS_PATH, this._options.skinPath + WYMeditor.SKINS_DEFAULT_CSS);
+    dialogHtml = h.replaceAll(dialogHtml, WYMeditor.WYM_PATH, this._options.wymPath);
+    dialogHtml = h.replaceAll(dialogHtml, WYMeditor.JQUERY_PATH, this._options.jQueryPath);
+    dialogHtml = h.replaceAll(dialogHtml, WYMeditor.DIALOG_TITLE, this.encloseString( dialogType ));
+    dialogHtml = h.replaceAll(dialogHtml, WYMeditor.DIALOG_BODY, sBodyHtml);
+    dialogHtml = h.replaceAll(dialogHtml, WYMeditor.INDEX, this._index);
+
+    dialogHtml = this.replaceStrings(dialogHtml);
+
+    if (wDialog) {
+      // write to pop-up
+      var doc = wDialog.document;
+      doc.write(dialogHtml);
+      doc.close();
+    }
+
+  } else {
+    // use BlockUI to show dialog for all non-msie browsers
+    dialogHtml = this.replaceStrings(sBodyHtml);
+    dialogHtml = dialogHtml.replace(/<body class='(.*)' onload='WYMeditor.INIT_DIALOG\(\{Wym_Index\}\)'>/, "<div class='$1'>");
+    dialogHtml = dialogHtml.replace("</body>", '</div>');
+    jQuery.blockUI({ message: dialogHtml });
+    initBlockUI(this, dialogType);
+  }
+
+/**
+ * BlockUI key hadnling
+ *
+ * @param e - the key event
+ */
+ function blockUIKeys(e) {
+    if( e.which == 27) {  // escape, close box
+      jQuery.unblockUI();
+      jQuery(document).unbind("keypress", blockUIKeys);
+    }
+}
+
+/**
+ * BlockUI Version for INIT_DIALOG
+ *
+ * @param wym - the wym editor opened the dialog
+ */
+function initBlockUI(wym, dialogType) {
+
+  jQuery(document).keypress(blockUIKeys);
+
+  var doc = window.document;
+
+  var selected = wym.selected();
+  var sStamp = wym.uniqueStamp();
+
+  switch(dialogType) {
+
+  case WYMeditor.DIALOG_LINK:
+    //ensure that we select the link to populate the fields
+    if(selected && selected.tagName && selected.tagName.toLowerCase != WYMeditor.A)
+      selected = jQuery(selected).parentsOrSelf(WYMeditor.A);
+
+    //fix MSIE selection if link image has been clicked
+    if(!selected && wym._selected_image)
+      selected = jQuery(wym._selected_image).parentsOrSelf(WYMeditor.A);
+      break;
+
+  }
+
+  //pre-init functions
+  if(jQuery.isFunction(wym._options.preInitDialog))
+    wym._options.preInitDialog(wym);
+
+  //add css rules from options
+  var styles = doc.styleSheets[0];
+  var aCss = eval(wym._options.dialogStyles);
+
+  wym.addCssRules(doc, aCss);
+
+  //auto populate fields if selected container (e.g. A)
+  if(selected) {
+    jQuery(wym._options.hrefSelector).val(jQuery(selected).attr(WYMeditor.HREF));
+    jQuery(wym._options.srcSelector).val(jQuery(selected).attr(WYMeditor.SRC));
+    jQuery(wym._options.titleSelector).val(jQuery(selected).attr(WYMeditor.TITLE));
+    jQuery(wym._options.altSelector).val(jQuery(selected).attr(WYMeditor.ALT));
+  }
+
+  //auto populate image fields if selected image
+  if(wym._selected_image) {
+    jQuery(wym._options.dialogImageSelector + " " + wym._options.srcSelector)
+      .val(jQuery(wym._selected_image).attr(WYMeditor.SRC));
+    jQuery(wym._options.dialogImageSelector + " " + wym._options.titleSelector)
+      .val(jQuery(wym._selected_image).attr(WYMeditor.TITLE));
+    jQuery(wym._options.dialogImageSelector + " " + wym._options.altSelector)
+      .val(jQuery(wym._selected_image).attr(WYMeditor.ALT));
+  }
+
+  jQuery(wym._options.dialogLinkSelector + " "
+    + wym._options.submitSelector).click(function() {
+
+      var sUrl = jQuery(wym._options.hrefSelector).val();
+      if(sUrl.length > 0) {
+
+        wym._exec(WYMeditor.CREATE_LINK, sStamp);
+
+        jQuery("a[@href=" + sStamp + "]", wym._doc.body)
+            .attr(WYMeditor.HREF, sUrl)
+            .attr(WYMeditor.TITLE, jQuery(wym._options.titleSelector).val());
+
+      }
+
+      jQuery.unblockUI();
+      jQuery(document).unbind("keypress", blockUIKeys);
+  });
+
+  jQuery(wym._options.dialogImageSelector + " "
+    + wym._options.submitSelector).click(function() {
+
+      var sUrl = jQuery(wym._options.srcSelector).val();
+      if(sUrl.length > 0) {
+
+        wym._exec(WYMeditor.INSERT_IMAGE, sStamp);
+
+        jQuery("img[@src=" + sStamp + "]", wym._doc.body)
+            .attr(WYMeditor.SRC, sUrl)
+            .attr(WYMeditor.TITLE, jQuery(wym._options.titleSelector).val())
+            .attr(WYMeditor.ALT, jQuery(wym._options.altSelector).val());
+      }
+      jQuery.unblockUI();
+      jQuery(document).unbind("keypress", blockUIKeys);
+  });
+
+  jQuery(wym._options.dialogTableSelector + " "
+    + wym._options.submitSelector).click(function() {
+
+      var iRows = jQuery(wym._options.rowsSelector).val();
+      var iCols = jQuery(wym._options.colsSelector).val();
+
+      if(iRows > 0 && iCols > 0) {
+
+        var table = wym._doc.createElement(WYMeditor.TABLE);
+        var newRow = null;
+		var newCol = null;
+
+		var sCaption = jQuery(wym._options.captionSelector).val();
+
+		//we create the caption
+		var newCaption = table.createCaption();
+		newCaption.innerHTML = sCaption;
+
+		//we create the rows and cells
+		for(x=0; x<iRows; x++) {
+			newRow = table.insertRow(x);
+			for(y=0; y<iCols; y++) {newRow.insertCell(y);}
+		}
+
+        //set the summary attr
+        jQuery(table).attr('summary',
+            jQuery(wym._options.summarySelector).val());
+
+        //append the table after the selected container
+        var node = jQuery(wym.findUp(wym.container(),
+          WYMeditor.MAIN_CONTAINERS)).get(0);
+        if(!node || !node.parentNode) jQuery(wym._doc.body).append(table);
+        else jQuery(node).after(table);
+      }
+      jQuery.unblockUI();
+      jQuery(document).unbind("keypress", blockUIKeys);
+  });
+
+  jQuery(wym._options.dialogPasteSelector + " "
+    + wym._options.submitSelector).click(function() {
+
+      var sText = jQuery(wym._options.textSelector).val();
+      wym.paste(sText);
+      jQuery.unblockUI();
+      jQuery(document).unbind("keypress", blockUIKeys);
+  });
+
+  jQuery(wym._options.dialogPreviewSelector + " "
+    + wym._options.previewSelector)
+    .html(wym.xhtml());
+
+  //cancel button
+
+  jQuery(wym._options.cancelSelector).mousedown(function() {
+      jQuery.unblockUI();
+      jQuery(document).unbind("keypress", blockUIKeys);
+  });
+
+  //pre-init functions
+  if(jQuery.isFunction(wym._options.postInitDialog))
+    wym._options.postInitDialog(wym);
+
+  };
 };
