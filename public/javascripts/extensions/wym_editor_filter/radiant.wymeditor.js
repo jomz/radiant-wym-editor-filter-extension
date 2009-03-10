@@ -252,11 +252,6 @@ function boot_wym(elem) {
 
       // bind assets dropping
       bind_droppability(wym._iframe);
-<<<<<<< HEAD:public/javascripts/extensions/wym_editor_filter/radiant.wymeditor.js
-			if (!jQuery.browser.msie)
-				timers[elem.id] = setInterval(function(){ adjustFramesize(wym._iframe); }, 20);
-    },
-=======
 
       // grow iframe on typing
       timers[elem.id] = setInterval(function(){ adjustFramesize(wym._iframe); }, 20);
@@ -271,7 +266,6 @@ function boot_wym(elem) {
       jQuery('#wym_area_top_' + elem.id).scrollFollow({ speed: 100, container: "wym_box_" + elem.id, offset: -1  });
 
      },
->>>>>>> 667d95948e42ec3ffa7d057bc2dd74b04c7f7017:public/javascripts/extensions/wym_editor_filter/radiant.wymeditor.js
 
     /**
      * Initialize the editor before construction of the visual editor:
@@ -286,7 +280,7 @@ function boot_wym(elem) {
       var content = (wym._html);
 
       // convert radius tags to wym_radius_edit tags
-      var m = content.match(/(<r:([^\/><]*)?\/?>)|(<\/r:([^>]*)?>)/g);
+      var m = content.match(/(<r:([^>]*)?\/?>)|(<\/r:([^>]*)?>)/g);
       if (!(m == null)) {
         for (var i=0; i < m.length; i++) {
           var tag = m[i].replace(/"/g, "'");
