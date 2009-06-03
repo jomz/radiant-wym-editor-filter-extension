@@ -38,6 +38,7 @@ function style_html(html_source, indent_size, indent_character, max_char) {
     this.Utils = { //Uilities made available to the various functions
       whitespace: "\n\r\t ".split(''),
       single_token: 'br,input,link,meta,!doctype,basefont,base,area,hr,wbr,param,img,isindex,?xml,embed'.split(','), //all the single tags for HTML
+      single_liners: 'a,strong,b,i'.split(','),
       extra_liners: 'head,body,/html'.split(','), //for tags that need a line of whitespace before them
       in_array: function (what, arr) {
         for (var i=0; i<arr.length; i++) {
@@ -208,6 +209,14 @@ function style_html(html_source, indent_size, indent_character, max_char) {
           this.Utils.in_array(tag_check, this.Utils.single_token)) { //if this tag name is a single tag type (either in the list or has a closing /)
         this.tag_type = 'SINGLE';
       }
+      else if (this.Utils.in_array(tag_check, this.Utils.single_liners)) { // If this tag should be on a single line with its closer
+        this.record_tag(tag_check);
+        this.tag_type = 'SINGLE_LINE';
+      }
+      else if (tag_check.charAt(0) === '/' && this.Utils.in_array(tag_check.substring(1), this.Utils.single_liners)) {
+        this.record_tag(tag_check);
+        this.tag_type = 'END_SINGLE_LINE';
+      }
       else if (tag_check === 'script') { //for later script handling
         this.record_tag(tag_check);
         this.tag_type = 'SCRIPT';
@@ -305,6 +314,17 @@ function style_html(html_source, indent_size, indent_character, max_char) {
                 {indent_size: this.indent_size, indent_char: this.indent_character, indent_level: this.indent_level}); //call the JS Beautifier
         return [token, 'TK_CONTENT'];
       }
+
+      if (this.last_token === 'TK_TAG_SINGLE_LINE') {
+        token = this.get_content()
+        if (typeof token !== 'string') {
+          return token;
+        }
+        else {
+          return [token, 'TK_SINGLE_LINE_CONTENT'];
+        }
+      }
+      
       if (this.current_mode === 'CONTENT') {
         token = this.get_content();
         if (typeof token !== 'string') {
@@ -409,6 +429,19 @@ function style_html(html_source, indent_size, indent_character, max_char) {
         break;
       case 'TK_TAG_SINGLE':
         multi_parser.print_newline(false, multi_parser.output);
+        multi_parser.print_token(multi_parser.token_text);
+        multi_parser.current_mode = 'CONTENT';
+        break;
+      case 'TK_TAG_SINGLE_LINE':
+        multi_parser.print_newline(false, multi_parser.output);
+        multi_parser.print_token(multi_parser.token_text)
+        multi_parser.current_mode = 'CONTENT';
+        break;
+      case 'TK_SINGLE_LINE_CONTENT':
+        multi_parser.print_token(multi_parser.token_text)
+        multi_parser.current_mode = 'TAG';
+        break;
+      case 'TK_TAG_END_SINGLE_LINE':
         multi_parser.print_token(multi_parser.token_text);
         multi_parser.current_mode = 'CONTENT';
         break;
