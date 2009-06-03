@@ -38,7 +38,7 @@ function style_html(html_source, indent_size, indent_character, max_char) {
     this.Utils = { //Uilities made available to the various functions
       whitespace: "\n\r\t ".split(''),
       single_token: 'br,input,link,meta,!doctype,basefont,base,area,hr,wbr,param,img,isindex,?xml,embed'.split(','), //all the single tags for HTML
-      single_liners: 'a,strong,b,i'.split(','),
+      inliner: 'a,strong,b,i'.split(','),
       extra_liners: 'head,body,/html'.split(','), //for tags that need a line of whitespace before them
       in_array: function (what, arr) {
         for (var i=0; i<arr.length; i++) {
@@ -50,7 +50,7 @@ function style_html(html_source, indent_size, indent_character, max_char) {
       }
     }
 
-    this.get_content = function () { //function to capture regular content between tags
+    this.get_content = function (keep_first_space) { //function to capture regular content between tags
 
       var input_char = '';
       var content = [];
@@ -64,9 +64,8 @@ function style_html(html_source, indent_size, indent_character, max_char) {
         this.pos++;
         this.line_char_count++;
 
-
         if (this.Utils.in_array(input_char, this.Utils.whitespace)) {
-          if (content.length) {
+          if (content.length || keep_first_space) {
             space = true;
           }
           this.line_char_count--;
@@ -209,13 +208,13 @@ function style_html(html_source, indent_size, indent_character, max_char) {
           this.Utils.in_array(tag_check, this.Utils.single_token)) { //if this tag name is a single tag type (either in the list or has a closing /)
         this.tag_type = 'SINGLE';
       }
-      else if (this.Utils.in_array(tag_check, this.Utils.single_liners)) { // If this tag should be on a single line with its closer
+      else if (this.Utils.in_array(tag_check, this.Utils.inliner)) { // If this tag should be on a single line with its closer
         this.record_tag(tag_check);
-        this.tag_type = 'SINGLE_LINE';
+        this.tag_type = 'INLINE';
       }
-      else if (tag_check.charAt(0) === '/' && this.Utils.in_array(tag_check.substring(1), this.Utils.single_liners)) {
+      else if (tag_check.charAt(0) === '/' && this.Utils.in_array(tag_check.substring(1), this.Utils.inliner)) {
         this.record_tag(tag_check);
-        this.tag_type = 'END_SINGLE_LINE';
+        this.tag_type = 'END_INLINE';
       }
       else if (tag_check === 'script') { //for later script handling
         this.record_tag(tag_check);
@@ -315,13 +314,13 @@ function style_html(html_source, indent_size, indent_character, max_char) {
         return [token, 'TK_CONTENT'];
       }
 
-      if (this.last_token === 'TK_TAG_SINGLE_LINE') {
-        token = this.get_content()
+      if (this.last_token === 'TK_TAG_INLINE' || this.last_token === 'TK_TAG_END_INLINE') {
+        token = this.get_content(true)
         if (typeof token !== 'string') {
           return token;
         }
         else {
-          return [token, 'TK_SINGLE_LINE_CONTENT'];
+          return [token, 'TK_INLINE_CONTENT'];
         }
       }
       
@@ -432,16 +431,16 @@ function style_html(html_source, indent_size, indent_character, max_char) {
         multi_parser.print_token(multi_parser.token_text);
         multi_parser.current_mode = 'CONTENT';
         break;
-      case 'TK_TAG_SINGLE_LINE':
+      case 'TK_TAG_INLINE':
         multi_parser.print_newline(false, multi_parser.output);
         multi_parser.print_token(multi_parser.token_text)
         multi_parser.current_mode = 'CONTENT';
         break;
-      case 'TK_SINGLE_LINE_CONTENT':
+      case 'TK_INLINE_CONTENT':
         multi_parser.print_token(multi_parser.token_text)
         multi_parser.current_mode = 'TAG';
         break;
-      case 'TK_TAG_END_SINGLE_LINE':
+      case 'TK_TAG_END_INLINE':
         multi_parser.print_token(multi_parser.token_text);
         multi_parser.current_mode = 'CONTENT';
         break;
