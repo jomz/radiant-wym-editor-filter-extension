@@ -38,7 +38,7 @@ function style_html(html_source, indent_size, indent_character, max_char) {
     this.Utils = { //Uilities made available to the various functions
       whitespace: "\n\r\t ".split(''),
       single_token: 'br,input,link,meta,!doctype,basefont,base,area,hr,wbr,param,img,isindex,?xml,embed'.split(','), //all the single tags for HTML
-      inliner: 'a,strong,b,i'.split(','),
+      inliner: 'a,strong,em,b,i,sub,sup'.split(','),
       extra_liners: 'head,body,/html'.split(','), //for tags that need a line of whitespace before them
       in_array: function (what, arr) {
         for (var i=0; i<arr.length; i++) {
