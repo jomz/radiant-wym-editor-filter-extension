@@ -159,5 +159,5 @@
         * html .wym_area_right { padding-right: 20px; }
         *+html .wym_area_right { padding-right: 20px; }
 
-        #asset-bucket { z-index: 400; }
+        #asset-bucket, #popups, .popup { z-index: 400 !important; }
 
