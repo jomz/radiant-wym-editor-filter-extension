@@ -447,12 +447,12 @@ function bind_droppability(box) {
         var asset_id = element.id.split('_').last();
         var tag = '<a href="'+ link.href +'">'+ link.title +'</a>'
       }
-      var wym_index = editors["part_" + (box.ancestors()[2].ancestors()[1].id.split('-')[1])  + "_content"];
+      if (/part-([\w\d-]+)/i.test(box.ancestors()[2].ancestors()[1].id))
+        var wym_index = editors["part_" + RegExp.$1  + "_content"];
       var wymm = WYMeditor.INSTANCES[wym_index];
       wymm.insert(tag);
     }
   });
-
 }
 
 /**
