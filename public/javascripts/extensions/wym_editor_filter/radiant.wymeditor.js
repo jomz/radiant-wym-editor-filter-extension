@@ -33,10 +33,11 @@ WYMeditor.XhtmlLexer.prototype.addTokens = function()
  */
 function init_load_wym_editor(){
 	// add "wymupdate" class to the save buttons:
-	for (var i = 0; i < $$(".button").length; i++){
+	var buttons = $$("p.buttons > .button")
+	for (var i = 0; i < buttons.length; i++){
 		//$($$(".button")[i]).addClassName('wymupdate');
 		// on save, run wymupdate and unboot on all instances;
-		Event.observe($$(".button")[i], 'click', unboot_all_wym)
+		Event.observe(buttons[i], 'click', unboot_all_wym)
 	}
 
   // check to see if we are working with a page or with a snippet
