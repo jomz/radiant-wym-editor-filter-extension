@@ -486,7 +486,7 @@ WYMeditor.editor.prototype.exec = function(cmd) {
     break;
 
     case WYMeditor.INSERT_IMAGE:
-      if (jQuery('#show-bucket')) {
+      if (jQuery('#show-bucket').length > 0) {
         if (jQuery("#asset-bucket").is(':visible')) {
             jQuery("#asset-bucket").hide();
         } else {
