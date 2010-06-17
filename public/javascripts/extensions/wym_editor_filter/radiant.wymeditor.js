@@ -99,7 +99,9 @@ function text_input_method(index, filter) {
 * @param elem - the textarea with the content to visualize
 */
 function boot_wym(elem) {
-
+	// this prevents loading new instances below eachother when clicking i.e. "show assets bucket"
+	if(jQuery(elem.siblings().first()).hasClass('wym_box'))
+		return false
   // construct a wymeditor with overridden values and functions
   jQuery(elem).wymeditor({
 
