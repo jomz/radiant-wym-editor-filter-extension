@@ -432,7 +432,8 @@ function style_html(html_source, indent_size, indent_character, max_char) {
         multi_parser.current_mode = 'CONTENT';
         break;
       case 'TK_TAG_INLINE':
-        multi_parser.print_newline(false, multi_parser.output);
+        // No newline here, since we want <b> and <sup> to all be inline (if users want to do m<sup>2</sup>)
+        // multi_parser.print_newline(false, multi_parser.output);
         multi_parser.print_token(multi_parser.token_text)
         multi_parser.current_mode = 'CONTENT';
         break;
