@@ -64,27 +64,6 @@ function style_html(html_source, indent_size, indent_character, max_char) {
         this.pos++;
         this.line_char_count++;
 
-        if (this.Utils.in_array(input_char, this.Utils.whitespace)) {
-          if (content.length || keep_first_space) {
-            space = true;
-          }
-          this.line_char_count--;
-          continue; //don't want to insert unnecessary space
-        }
-        else if (space) {
-          if (this.line_char_count >= this.max_char) { //insert a line when the max_char is reached
-            content.push('\n');
-            for (var i=0; i<this.indent_level; i++) {
-              content.push(this.indent_string);
-            }
-            this.line_char_count = 0;
-          }
-          else{
-            content.push(' ');
-            this.line_char_count++;
-          }
-          space = false;
-        }
         content.push(input_char); //letter at-a-time (or string) inserted to an array
       }
       return content.length?content.join(''):'';
