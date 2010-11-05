@@ -489,12 +489,10 @@ WYMeditor.editor.prototype.exec = function(cmd) {
 
     case WYMeditor.INSERT_IMAGE:
       if (jQuery('#show-bucket').length > 0) {
-        if (jQuery("#asset-bucket").is(':visible')) {
-            jQuery("#asset-bucket").hide();
-        } else {
-            jQuery("#asset-bucket").show();
-            center($('asset-bucket'));
-        }
+        var element = jQuery('asset-bucket');
+        element.centerInViewport();
+        element.toggle();
+        Asset.MakeDroppables();
       } else {
         this.dialog(WYMeditor.DIALOG_IMAGE);
       }
