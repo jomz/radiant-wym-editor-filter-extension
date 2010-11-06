@@ -489,7 +489,7 @@ WYMeditor.editor.prototype.exec = function(cmd) {
 
     case WYMeditor.INSERT_IMAGE:
       if (jQuery('#show-bucket').length > 0) {
-        var element = jQuery('asset-bucket');
+        var element = $('asset-bucket');
         element.centerInViewport();
         element.toggle();
         Asset.MakeDroppables();
