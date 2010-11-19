@@ -253,8 +253,9 @@ function boot_wym(elem) {
       // map the index of this instance to it's page_part
       editors[elem.id] = wym._index;
 
-      // bind assets dropping
-      bind_droppability(wym._iframe);
+      // bind assets dropping if paperclipped bucket is present
+      if($('a.bucket_link'))
+        bind_droppability(wym._iframe);
 
       // grow iframe on typing
       timers[elem.id] = setInterval(function(){ adjustFramesize(wym._iframe); }, 20);
