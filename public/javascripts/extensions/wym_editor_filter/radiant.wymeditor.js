@@ -254,7 +254,7 @@ function boot_wym(elem) {
       editors[elem.id] = wym._index;
 
       // bind assets dropping if paperclipped bucket is present
-      if($('a.bucket_link'))
+      if($$('#show-bucket a'))
         bind_droppability(wym._iframe);
 
       // grow iframe on typing
